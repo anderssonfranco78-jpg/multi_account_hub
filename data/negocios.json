@@ -1,0 +1,595 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-09-24T02:00:00Z",
+  "total_businesses": 4,
+  "businesses": [
+    {
+      "id": "steamfur-pro",
+      "nombre": "SteamFur Pro™",
+      "nicho": "Mascotas & Cuidado del Hogar",
+      "producto_asociado": {
+        "nombre_completo": "SteamFur Pro™ — Cepillo de Vapor Iónico 3 en 1 para Mascotas",
+        "categoria": "Pet Supplies & Home Care",
+        "descripcion": "Conical silicone pet brush with integrated cold ion ultrasonic mist that neutralizes static and allows peeling off shed pet hair in a single solid sheet in 2 seconds.",
+        "precio_sugerido_usd": 29.99,
+        "costo_proveedor_usd": 1.00,
+        "costo_envio_usd": 2.50,
+        "costo_puesto_usd": 3.50,
+        "beneficio_neto_usd": 25.02,
+        "margen_neto_pct": 83.43,
+        "markup_multiplier": 8.57,
+        "proveedor_url": "https://www.aliexpress.com/w/wholesale-steamy-cat-brush.html",
+        "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=steamy%20pet%20brush",
+        "linea_logistica": "YunExpress Ordinary / CJPacket Fast Line (7 - 10 días laborables)",
+        "paises_objetivo": ["US", "CA", "UK", "AU"]
+      },
+      "score_hunter": 100.0,
+      "enlace_tienda": "https://trysteamfur.com/products/pet-brush",
+      "cluster_canales": {
+        "youtube_shorts": {
+          "handle": "@SteamFurOfficial",
+          "canal_url": "https://youtube.com/@SteamFurOfficial",
+          "estado": "activo",
+          "seguidores": 4250,
+          "reproducciones_totales": 128400,
+          "videos_publicados": 18,
+          "ultimo_post": "2026-09-23T15:00:00Z"
+        },
+        "instagram_reels": {
+          "handle": "@steamfur_us",
+          "canal_url": "https://instagram.com/steamfur_us",
+          "estado": "activo",
+          "seguidores": 3890,
+          "reproducciones_totales": 96200,
+          "videos_publicados": 18,
+          "ultimo_post": "2026-09-23T23:00:00Z"
+        },
+        "facebook_reels": {
+          "handle": "SteamFur Pet Care Official",
+          "canal_url": "https://facebook.com/steamfur_official",
+          "estado": "activo",
+          "seguidores": 1920,
+          "reproducciones_totales": 45100,
+          "videos_publicados": 14,
+          "ultimo_post": "2026-09-23T23:00:00Z"
+        },
+        "tiktok": {
+          "handle": "@trysteamfur_usa",
+          "canal_url": "https://tiktok.com/@trysteamfur_usa",
+          "estado": "calentamiento",
+          "seguidores": 310,
+          "reproducciones_totales": 3200,
+          "videos_publicados": 0,
+          "ultimo_post": null,
+          "burner_phone_id": "Burner-Phone-Pixel4a-SIM-MintUS-01"
+        }
+      },
+      "credenciales_aisladas": {
+        "correo_gestion": "ops.steamfur@gmail.com",
+        "perfil_antidetect": "Profile-Dolphin-SteamFur-01",
+        "proxy_asignado": "us-ny-res-01.proxy-pool.net:8080",
+        "sim_mcc": "310 (T-Mobile USA inactiva)",
+        "burner_device": "Burner-Phone-Pixel4a-SIM-MintUS-01",
+        "n8n_credential_ref": "n8n_cred_steamfur_meta_v3",
+        "api_keys_refs": {
+          "youtube_api_env": "YT_API_KEY_STEAMFUR",
+          "meta_graph_env": "META_TOKEN_STEAMFUR"
+        }
+      },
+      "metricas_resumen": {
+        "videos_hoy": 2,
+        "vistas_hoy": 14200,
+        "clics_tienda_hoy": 84,
+        "vistas_ultimos_7_dias": 89400,
+        "tasa_conversion_bio_pct": 1.25,
+        "dias_sin_publicar": 0,
+        "account_health_score": 96.5,
+        "health_status": "optimo"
+      },
+      "historial_metricas": [
+        {
+          "fecha": "2026-09-21",
+          "videos_publicados": 2,
+          "vistas": 12800,
+          "likes": 980,
+          "clics_checkout": 68,
+          "pedidos": 5,
+          "health_score": 94.0
+        },
+        {
+          "fecha": "2026-09-22",
+          "videos_publicados": 2,
+          "vistas": 13900,
+          "likes": 1120,
+          "clics_checkout": 79,
+          "pedidos": 7,
+          "health_score": 95.8
+        },
+        {
+          "fecha": "2026-09-23",
+          "videos_publicados": 2,
+          "vistas": 14200,
+          "likes": 1150,
+          "clics_checkout": 84,
+          "pedidos": 6,
+          "health_score": 96.5
+        }
+      ],
+      "ganchos_conversion": {
+        "gancho_1_curiosidad": {
+          "nombre": "Curiosidad Disruptiva: La Manta de Pelo Extraída en 3 Segundos",
+          "voz_cliente": "¿Por qué los veterinarios aconsejan no cepillar a tu gato en seco nunca más?",
+          "voz_creador": "Porque el vapor frío ionizado neutraliza la estática y retira el pelo muerto en una manta sólida.",
+          "sfx": "STEAM_HISS",
+          "texto_3d": "¿NO EN SECO?"
+        },
+        "gancho_2_agitacion": {
+          "nombre": "Agitación de Dolor Real: La Pesadilla de los Pelos en Toda la Casa",
+          "voz_cliente": "¿Cansado de encontrar pelos de gato en tu ropa, en el sofá y hasta en tu comida?",
+          "voz_creador": "El cepillado común solo esparce los pelos por el aire; esto los atrapa al 100%.",
+          "sfx": "RECORD_SCRATCH",
+          "texto_3d": "¿PELOS EN TU COMIDA?"
+        },
+        "gancho_3_contrariano": {
+          "nombre": "Contrariano: La Trampa de los Rodillos de Pegamento Adhesivo",
+          "voz_cliente": "Por qué los rodillos adhesivos de papel son el peor gasto para dueños de mascotas...",
+          "voz_creador": "Gastas una fortuna en rollos que no quitan la raíz del pelaje suelto.",
+          "sfx": "TRASH_SLAM",
+          "texto_3d": "DINERO PERDIDO"
+        },
+        "gancho_4_transformacion": {
+          "nombre": "Transformación Inmediata: De la Lucha del Baño al Placer del Vapor",
+          "voz_cliente": "De pasar 40 minutos persiguiendo a tu mascota con un cepillo que la estresa...",
+          "voz_creador": "A retirarle toda la capa muerta en 3 minutos mientras disfruta de un masaje de vapor.",
+          "sfx": "PURR_SOFT",
+          "texto_3d": "SPA EN CASA"
+        }
+      },
+      "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
+      "status": "activo",
+      "created_at": "2026-09-20T12:00:00Z",
+      "updated_at": "2026-09-23T23:00:00Z"
+    },
+    {
+      "id": "prosmile-ultrasonic",
+      "nombre": "ProSmile Ultrasonic™",
+      "nicho": "Salud Dental & Cuidado Personal",
+      "producto_asociado": {
+        "nombre_completo": "ProSmile Ultrasonic™ — Limpiador Dental Ultrasónico de Sarro y Placa",
+        "categoria": "Dental Health & Personal Care",
+        "descripcion": "Home dental hygiene scaler with 40 kHz acoustic micro-vibrations and bioelectric sensor that shatters solid calculus instantly while stopping automatically on gums.",
+        "precio_sugerido_usd": 34.99,
+        "costo_proveedor_usd": 4.50,
+        "costo_envio_usd": 3.70,
+        "costo_puesto_usd": 8.20,
+        "beneficio_neto_usd": 25.13,
+        "margen_neto_pct": 71.82,
+        "markup_multiplier": 4.27,
+        "proveedor_url": "https://www.aliexpress.com/w/wholesale-ultrasonic-dental-calculus-remover.html",
+        "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=ultrasonic%20tooth%20cleaner",
+        "linea_logistica": "CJPacket Fast Line / YunExpress Ordinary (7 - 10 días laborables)",
+        "paises_objetivo": ["US", "UK", "DE", "AU"]
+      },
+      "score_hunter": 100.0,
+      "enlace_tienda": "https://getprosmile.com/products/ultrasonic-scaler",
+      "cluster_canales": {
+        "youtube_shorts": {
+          "handle": "@ProSmileDental",
+          "canal_url": "https://youtube.com/@ProSmileDental",
+          "estado": "activo",
+          "seguidores": 5120,
+          "reproducciones_totales": 142300,
+          "videos_publicados": 20,
+          "ultimo_post": "2026-09-23T15:00:00Z"
+        },
+        "instagram_reels": {
+          "handle": "@prosmile_smile",
+          "canal_url": "https://instagram.com/prosmile_smile",
+          "estado": "activo",
+          "seguidores": 4430,
+          "reproducciones_totales": 118700,
+          "videos_publicados": 20,
+          "ultimo_post": "2026-09-23T23:00:00Z"
+        },
+        "facebook_reels": {
+          "handle": "ProSmile Oral Care",
+          "canal_url": "https://facebook.com/prosmile_oralcare",
+          "estado": "activo",
+          "seguidores": 2410,
+          "reproducciones_totales": 52800,
+          "videos_publicados": 16,
+          "ultimo_post": "2026-09-23T23:00:00Z"
+        },
+        "tiktok": {
+          "handle": "@getprosmile_usa",
+          "canal_url": "https://tiktok.com/@getprosmile_usa",
+          "estado": "calentamiento",
+          "seguidores": 420,
+          "reproducciones_totales": 4800,
+          "videos_publicados": 0,
+          "ultimo_post": null,
+          "burner_phone_id": "Burner-Phone-Pixel5-SIM-UltraMobileUS-02"
+        }
+      },
+      "credenciales_aisladas": {
+        "correo_gestion": "ops.prosmile@gmail.com",
+        "perfil_antidetect": "Profile-Dolphin-ProSmile-02",
+        "proxy_asignado": "us-fl-res-02.proxy-pool.net:8080",
+        "sim_mcc": "310 (AT&T USA inactiva)",
+        "burner_device": "Burner-Phone-Pixel5-SIM-UltraMobileUS-02",
+        "n8n_credential_ref": "n8n_cred_prosmile_meta_v3",
+        "api_keys_refs": {
+          "youtube_api_env": "YT_API_KEY_PROSMILE",
+          "meta_graph_env": "META_TOKEN_PROSMILE"
+        }
+      },
+      "metricas_resumen": {
+        "videos_hoy": 2,
+        "vistas_hoy": 16800,
+        "clics_tienda_hoy": 98,
+        "vistas_ultimos_7_dias": 104500,
+        "tasa_conversion_bio_pct": 1.38,
+        "dias_sin_publicar": 0,
+        "account_health_score": 97.2,
+        "health_status": "optimo"
+      },
+      "historial_metricas": [
+        {
+          "fecha": "2026-09-21",
+          "videos_publicados": 2,
+          "vistas": 14900,
+          "likes": 1150,
+          "clics_checkout": 82,
+          "pedidos": 7,
+          "health_score": 95.0
+        },
+        {
+          "fecha": "2026-09-22",
+          "videos_publicados": 2,
+          "vistas": 15800,
+          "likes": 1280,
+          "clics_checkout": 91,
+          "pedidos": 8,
+          "health_score": 96.4
+        },
+        {
+          "fecha": "2026-09-23",
+          "videos_publicados": 2,
+          "vistas": 16800,
+          "likes": 1390,
+          "clics_checkout": 98,
+          "pedidos": 9,
+          "health_score": 97.2
+        }
+      ],
+      "ganchos_conversion": {
+        "gancho_1_curiosidad": {
+          "nombre": "Curiosidad Disruptiva: El Metal que No Rompe Huevos",
+          "voz_cliente": "¿Cómo es posible que esto rompa piedra pero no pueda reventar un globo?",
+          "voz_creador": "Porque tiene un sensor acústico que solo se activa al tocar sarro duro.",
+          "sfx": "RECORD_SCRATCH_QUICK",
+          "texto_3d": "¿ROMPE PIEDRA?"
+        },
+        "gancho_2_agitacion": {
+          "nombre": "Agitación de Dolor Real: La Vergüenza de Sonreír en Fotos",
+          "voz_cliente": "Si dejas de sonreír en las fotos porque te da vergüenza el sarro amarillo acumulado...",
+          "voz_creador": "Y no tienes $300 de sobra para pagarle al dentista cada 6 meses...",
+          "sfx": "HEARTBEAT_DULL",
+          "texto_3d": "¿VERGÜENZA AL SONREÍR?"
+        },
+        "gancho_3_contrariano": {
+          "nombre": "Contrariano: Por qué tu Cepillo de $120 No Sirve para el Sarro",
+          "voz_cliente": "Por qué cepillarte 3 veces al día jamás quitará el sarro duro de tus dientes...",
+          "voz_creador": "El sarro es piedra caliza sólida; el cepillo de cerdas solo le hace cosquillas.",
+          "sfx": "BRUSH_SCRUB_FAST",
+          "texto_3d": "NO LO QUITA"
+        },
+        "gancho_4_transformacion": {
+          "nombre": "Transformación Inmediata: De 5 Años de Sarro a Dientes de Seda",
+          "voz_cliente": "De tener 5 años de sarro y manchas de tabaco pegadas a los dientes...",
+          "voz_creador": "A dejarlos con textura de seda y completamente limpios en 10 minutos.",
+          "sfx": "SAD_SCRATCH",
+          "texto_3d": "TEXTURA DE SEDA"
+        }
+      },
+      "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
+      "status": "activo",
+      "created_at": "2026-09-19T10:00:00Z",
+      "updated_at": "2026-09-23T23:00:00Z"
+    },
+    {
+      "id": "spinerelief-pro",
+      "nombre": "SpineRelief Pro™",
+      "nicho": "Ergonomía & Salud Lumbar",
+      "producto_asociado": {
+        "nombre_completo": "SpineRelief Pro™ — Cinturón Neumático de Descompresión Lumbar L1-L5",
+        "categoria": "Health & Ergonomics",
+        "descripcion": "Clinical-grade inflatable lumbar traction belt with 24 pneumatic columns providing 2.5 bar decompression for L1-L5 vertebrae and acute sciatica nerve relief.",
+        "precio_sugerido_usd": 54.99,
+        "costo_proveedor_usd": 10.00,
+        "costo_envio_usd": 4.80,
+        "costo_puesto_usd": 14.80,
+        "beneficio_neto_usd": 37.75,
+        "margen_neto_pct": 68.65,
+        "markup_multiplier": 3.72,
+        "proveedor_url": "https://www.aliexpress.com/w/wholesale-lumbar-traction-belt.html",
+        "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=lumbar%20traction%20belt",
+        "linea_logistica": "YunExpress Specialty Line (7 - 10 días laborables)",
+        "paises_objetivo": ["US", "UK", "CA", "AU"]
+      },
+      "score_hunter": 97.0,
+      "enlace_tienda": "https://spinerelief.store/products/traction-belt",
+      "cluster_canales": {
+        "youtube_shorts": {
+          "handle": "@SpineReliefTech",
+          "canal_url": "https://youtube.com/@SpineReliefTech",
+          "estado": "activo",
+          "seguidores": 3480,
+          "reproducciones_totales": 89500,
+          "videos_publicados": 16,
+          "ultimo_post": "2026-09-23T15:00:00Z"
+        },
+        "instagram_reels": {
+          "handle": "@spinerelief_us",
+          "canal_url": "https://instagram.com/spinerelief_us",
+          "estado": "activo",
+          "seguidores": 3120,
+          "reproducciones_totales": 72400,
+          "videos_publicados": 16,
+          "ultimo_post": "2026-09-23T23:00:00Z"
+        },
+        "facebook_reels": {
+          "handle": "SpineRelief Official",
+          "canal_url": "https://facebook.com/spinerelief_official",
+          "estado": "activo",
+          "seguidores": 1840,
+          "reproducciones_totales": 38600,
+          "videos_publicados": 12,
+          "ultimo_post": "2026-09-23T23:00:00Z"
+        },
+        "tiktok": {
+          "handle": "@spinerelief_usa",
+          "canal_url": "https://tiktok.com/@spinerelief_usa",
+          "estado": "calentamiento",
+          "seguidores": 280,
+          "reproducciones_totales": 2900,
+          "videos_publicados": 0,
+          "ultimo_post": null,
+          "burner_phone_id": "Burner-Phone-GalaxyS10-SIM-MintUS-03"
+        }
+      },
+      "credenciales_aisladas": {
+        "correo_gestion": "ops.spinerelief@gmail.com",
+        "perfil_antidetect": "Profile-Dolphin-SpineRelief-03",
+        "proxy_asignado": "us-tx-res-03.proxy-pool.net:8080",
+        "sim_mcc": "311 (Verizon USA inactiva)",
+        "burner_device": "Burner-Phone-GalaxyS10-SIM-MintUS-03",
+        "n8n_credential_ref": "n8n_cred_spinerelief_meta_v3",
+        "api_keys_refs": {
+          "youtube_api_env": "YT_API_KEY_SPINERELIEF",
+          "meta_graph_env": "META_TOKEN_SPINERELIEF"
+        }
+      },
+      "metricas_resumen": {
+        "videos_hoy": 2,
+        "vistas_hoy": 11300,
+        "clics_tienda_hoy": 65,
+        "vistas_ultimos_7_dias": 68900,
+        "tasa_conversion_bio_pct": 1.18,
+        "dias_sin_publicar": 0,
+        "account_health_score": 95.1,
+        "health_status": "optimo"
+      },
+      "historial_metricas": [
+        {
+          "fecha": "2026-09-21",
+          "videos_publicados": 2,
+          "vistas": 10200,
+          "likes": 780,
+          "clics_checkout": 54,
+          "pedidos": 4,
+          "health_score": 93.5
+        },
+        {
+          "fecha": "2026-09-22",
+          "videos_publicados": 2,
+          "vistas": 10800,
+          "likes": 840,
+          "clics_checkout": 59,
+          "pedidos": 5,
+          "health_score": 94.2
+        },
+        {
+          "fecha": "2026-09-23",
+          "videos_publicados": 2,
+          "vistas": 11300,
+          "likes": 910,
+          "clics_checkout": 65,
+          "pedidos": 6,
+          "health_score": 95.1
+        }
+      ],
+      "ganchos_conversion": {
+        "gancho_1_curiosidad": {
+          "nombre": "Curiosidad Disruptiva: El Secreto Médico Prohibido",
+          "voz_cliente": "¿Por qué los camioneros tienen prohibido manejar sin inflarse esto?",
+          "voz_creador": "Porque en 30 segundos separa tus vértebras 7 milímetros.",
+          "sfx": "WHOOSH_FAST",
+          "texto_3d": "¿PROHIBIDO?"
+        },
+        "gancho_2_agitacion": {
+          "nombre": "Agitación de Dolor Real: El Ardor Lumbar al Levantarte",
+          "voz_cliente": "Si levantarte de la cama o del auto te toma 5 minutos por ese ardor lumbar...",
+          "voz_creador": "Tus vértebras están aplastando este nervio ahora mismo.",
+          "sfx": "HEARTBEAT_LOW",
+          "texto_3d": "¿ARDOR LUMBAR?"
+        },
+        "gancho_3_contrariano": {
+          "nombre": "Contrariano: La Farsa de las Fajas de Farmacia",
+          "voz_cliente": "Por qué gastar $150 en fajas de farmacia empeora tu dolor de espalda...",
+          "voz_creador": "Porque apretar tu abdomen no separa tus huesos.",
+          "sfx": "TRASH_SLAM",
+          "texto_3d": "NO SIRVEN"
+        },
+        "gancho_4_transformacion": {
+          "nombre": "Transformación Inmediata: De la Incapacidad a la Plenitud",
+          "voz_cliente": "De no poder atarte las zapatillas por el dolor de ciática...",
+          "voz_creador": "A pasar 6 horas de pie sin un solo tirón lumbar.",
+          "sfx": "RECORD_SCRATCH",
+          "texto_3d": "ANTES / DESPUÉS"
+        }
+      },
+      "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
+      "status": "activo",
+      "created_at": "2026-09-20T14:00:00Z",
+      "updated_at": "2026-09-23T23:00:00Z"
+    },
+    {
+      "id": "aeroforce-x3",
+      "nombre": "AeroForce X3™",
+      "nicho": "Automotriz & Herramientas Tácticas",
+      "producto_asociado": {
+        "nombre_completo": "AeroForce X3™ — Micro-Turbina Violenta de 130,000 RPM para Secado y Detailing",
+        "categoria": "Automotive & Tactical Tools",
+        "descripcion": "Handheld micro-turbine jet fan with 130,000 RPM brushless motor delivering 52 m/s wind speed for contact-free car drying, detailing, and keyboard cleaning without swirl marks.",
+        "precio_sugerido_usd": 59.99,
+        "costo_proveedor_usd": 12.00,
+        "costo_envio_usd": 4.80,
+        "costo_puesto_usd": 16.80,
+        "beneficio_neto_usd": 40.55,
+        "margen_neto_pct": 67.59,
+        "markup_multiplier": 3.57,
+        "proveedor_url": "https://www.aliexpress.com/w/wholesale-turbo-jet-fan.html",
+        "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=turbo%20jet%20fan",
+        "linea_logistica": "YunExpress Special Battery Line / CJPacket Sensitive (UN38.3) (8 - 11 días hábiles)",
+        "paises_objetivo": ["US", "CA", "AU", "UK"]
+      },
+      "score_hunter": 97.0,
+      "enlace_tienda": "https://aeroforcejet.com/products/x3-turbo-fan",
+      "cluster_canales": {
+        "youtube_shorts": {
+          "handle": "@AeroForceTurbine",
+          "canal_url": "https://youtube.com/@AeroForceTurbine",
+          "estado": "activo",
+          "seguidores": 3950,
+          "reproducciones_totales": 112000,
+          "videos_publicados": 18,
+          "ultimo_post": "2026-09-23T15:00:00Z"
+        },
+        "instagram_reels": {
+          "handle": "@aeroforce_x3",
+          "canal_url": "https://instagram.com/aeroforce_x3",
+          "estado": "activo",
+          "seguidores": 3610,
+          "reproducciones_totales": 88400,
+          "videos_publicados": 18,
+          "ultimo_post": "2026-09-23T23:00:00Z"
+        },
+        "facebook_reels": {
+          "handle": "AeroForce Jet Fan",
+          "canal_url": "https://facebook.com/aeroforce_fan",
+          "estado": "activo",
+          "seguidores": 1750,
+          "reproducciones_totales": 41200,
+          "videos_publicados": 14,
+          "ultimo_post": "2026-09-23T23:00:00Z"
+        },
+        "tiktok": {
+          "handle": "@aeroforce_usa",
+          "canal_url": "https://tiktok.com/@aeroforce_usa",
+          "estado": "calentamiento",
+          "seguidores": 295,
+          "reproducciones_totales": 3100,
+          "videos_publicados": 0,
+          "ultimo_post": null,
+          "burner_phone_id": "Burner-Phone-Pixel4-SIM-TelloUS-04"
+        }
+      },
+      "credenciales_aisladas": {
+        "correo_gestion": "ops.aeroforce@gmail.com",
+        "perfil_antidetect": "Profile-Dolphin-AeroForce-04",
+        "proxy_asignado": "us-ca-res-04.proxy-pool.net:8080",
+        "sim_mcc": "310 (T-Mobile USA inactiva)",
+        "burner_device": "Burner-Phone-Pixel4-SIM-TelloUS-04",
+        "n8n_credential_ref": "n8n_cred_aeroforce_meta_v3",
+        "api_keys_refs": {
+          "youtube_api_env": "YT_API_KEY_AEROFORCE",
+          "meta_graph_env": "META_TOKEN_AEROFORCE"
+        }
+      },
+      "metricas_resumen": {
+        "videos_hoy": 2,
+        "vistas_hoy": 13500,
+        "clics_tienda_hoy": 78,
+        "vistas_ultimos_7_dias": 81200,
+        "tasa_conversion_bio_pct": 1.22,
+        "dias_sin_publicar": 0,
+        "account_health_score": 96.0,
+        "health_status": "optimo"
+      },
+      "historial_metricas": [
+        {
+          "fecha": "2026-09-21",
+          "videos_publicados": 2,
+          "vistas": 11900,
+          "likes": 890,
+          "clics_checkout": 62,
+          "pedidos": 5,
+          "health_score": 93.8
+        },
+        {
+          "fecha": "2026-09-22",
+          "videos_publicados": 2,
+          "vistas": 12700,
+          "likes": 980,
+          "clics_checkout": 71,
+          "pedidos": 6,
+          "health_score": 95.0
+        },
+        {
+          "fecha": "2026-09-23",
+          "videos_publicados": 2,
+          "vistas": 13500,
+          "likes": 1050,
+          "clics_checkout": 78,
+          "pedidos": 7,
+          "health_score": 96.0
+        }
+      ],
+      "ganchos_conversion": {
+        "gancho_1_curiosidad": {
+          "nombre": "Curiosidad Disruptiva: Un Motor de Caza en el Bolsillo",
+          "voz_cliente": "¿Cómo es legal tener un motor de avión en el bolsillo?",
+          "voz_creador": "130,000 revoluciones por minuto. Esto no es un juguete.",
+          "sfx": "AIR_BLAST_WHOOSH",
+          "texto_3d": "¿CÓMO ES LEGAL?"
+        },
+        "gancho_2_agitacion": {
+          "nombre": "Agitación de Dolor Real: Los Swirl Marks que Destruyen tu Auto",
+          "voz_cliente": "Si secas tu auto con toallas de microfibra, estás arruinando tu pintura...",
+          "voz_creador": "Una sola mota de polvo atrapada en el trapo y tu coche pierde el 30% de su valor.",
+          "sfx": "GLASS_SCRATCH",
+          "texto_3d": "ESTÁS RAYANDO TU AUTO"
+        },
+        "gancho_3_contrariano": {
+          "nombre": "Contrariano: La Estafa de las Latas Desechables de Aire",
+          "voz_cliente": "Deja de tirar tu dinero en latas de aire comprimido que se congelan en 20 segundos...",
+          "voz_creador": "Pagas $10 por lata para que escupan líquido y se queden sin fuerza a la mitad.",
+          "sfx": "GAS_FART_FAIL",
+          "texto_3d": "ESTAFA TOTAL"
+        },
+        "gancho_4_transformacion": {
+          "nombre": "Transformación Inmediata: De Espejos Goteando a Acabado Profesional",
+          "voz_cliente": "De terminar de lavar tu coche y ver cómo el agua estancada te arruina la pintura otra vez...",
+          "voz_creador": "A dejar cada rincón sellado y seco al 100% en menos de 2 minutos.",
+          "sfx": "SAD_TROMBONE_SHORT",
+          "texto_3d": "SECO EN 2 MIN"
+        }
+      },
+      "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
+      "status": "activo",
+      "created_at": "2026-09-20T16:00:00Z",
+      "updated_at": "2026-09-23T23:00:00Z"
+    }
+  ]
+}

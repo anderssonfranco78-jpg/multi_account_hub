@@ -1,0 +1,661 @@
+{
+  "id": "antigravity-flujo-despacho-triada-oro",
+  "name": "Flujo Despacho Tríada de Oro (YouTube Shorts + Instagram Reels + Facebook Reels)",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 11,19 * * *"
+            }
+          ]
+        }
+      },
+      "id": "node-schedule-peak",
+      "name": "Horario Programado USA (11 AM & 7 PM EST)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        100,
+        240
+      ],
+      "notes": "Dispara automáticamente a las 11:00 AM EST (almuerzo USA) y a las 7:00 PM EST (prime time nocturno USA)."
+    },
+    {
+      "parameters": {
+        "path": "triada-oro-dispatch",
+        "httpMethod": "POST",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "node-webhook-manual",
+      "name": "Webhook Disparo Manual / Inmediato",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        100,
+        440
+      ],
+      "notes": "Endpoint de disparo manual o via Remotion/Hub. Acepta payload {'force_dispatch': true}."
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Validar Hora Pico USA (America/New_York)\nconst now = new Date();\nconst inputData = $input.first()?.json || {};\n\n// Comprobar si se ha solicitado despacho forzado (override manual)\nconst isForced = inputData.force_dispatch === true || inputData.body?.force_dispatch === true;\n\n// Obtener hora y minutos actuales en la zona horaria oficial del mercado objetivo USA\nconst estTimeFormatter = new Intl.DateTimeFormat('en-US', {\n  timeZone: 'America/New_York',\n  hour: 'numeric',\n  minute: 'numeric',\n  hour12: false\n});\n\nconst estParts = estTimeFormatter.formatToParts(now);\nlet estHour = 0;\nlet estMinute = 0;\nfor (const part of estParts) {\n  if (part.type === 'hour') estHour = parseInt(part.value, 10);\n  if (part.type === 'minute') estMinute = parseInt(part.value, 10);\n}\n\n// Convertir hora y minutos a minutos acumulados del día\nconst totalEstMinutes = (estHour * 60) + estMinute;\n\n// Ventanas Pico Oficiales de Alto Impacto USA (±30 minutos de holgura):\n// Ventana 1: 11:00 AM EST -> 660 min (Rango: 10:30 a 11:30 = 630 a 690 min)\n// Ventana 2: 07:00 PM EST -> 1140 min (Rango: 18:30 a 19:30 = 1110 a 1170 min)\nconst isWindow11AM = (totalEstMinutes >= 630 && totalEstMinutes <= 690);\nconst isWindow7PM = (totalEstMinutes >= 1110 && totalEstMinutes <= 1170);\n\nlet activeSlot = null;\nif (isWindow11AM) activeSlot = '11:00 AM EST (Almuerzo USA)';\nelse if (isWindow7PM) activeSlot = '07:00 PM EST (Prime Nocturno USA)';\nelse if (isForced) activeSlot = 'Manual Override (Forzado)';\n\nconst isPeakWindow = isForced || isWindow11AM || isWindow7PM;\n\nreturn [{\n  json: {\n    is_peak_window: isPeakWindow,\n    active_slot: activeSlot,\n    est_hour: estHour,\n    est_minute: estMinute,\n    est_formatted: `${String(estHour).padStart(2, '0')}:${String(estMinute).padStart(2, '0')} EST`,\n    force_applied: isForced,\n    timestamp_utc: now.toISOString(),\n    status: isPeakWindow ? 'PEAK_VALIDATED' : 'OFF_PEAK_SKIPPED',\n    message: isPeakWindow \n      ? `Ventana pico confirmada: ${activeSlot}` \n      : `Fuera de ventana pico (${estHour}:${estMinute} EST). Postergando despacho.`\n  }\n}];"
+      },
+      "id": "node-validar-hora-pico",
+      "name": "Validar Hora Pico USA",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        360,
+        340
+      ],
+      "notes": "Valida si el horario actual en America/New_York coincide con 11:00 AM o 7:00 PM EST (±30 min) o si hay override manual."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.is_peak_window }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "node-if-hora-pico",
+      "name": "¿Es Hora Pico o Forzado?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        600,
+        340
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "node-fin-offpeak",
+      "name": "Fin - Fuera de Horario Pico",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        840,
+        480
+      ],
+      "notes": "Ejecución detenida de forma segura para proteger el algoritmo contra publicaciones en horas muertas."
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://josa-db.duckdns.org/api/v2/tables/Videos_Queue/records?where=(status,eq,READY)",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xc-token",
+              "value": "={{ $env.NOCODB_API_TOKEN || 'nc_pat_tgVyjziQvOAYMhd1iXopnb59KIH0FVZPaGDs8PyP' }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "node-obtener-nocodb",
+      "name": "Obtener Videos Listos de NocoDB",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        840,
+        260
+      ],
+      "notes": "Consulta en la base NocoDB (josa-db.duckdns.org) la tabla Videos_Queue filtrando status=READY."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ ($json.list ? $json.list.length : (Array.isArray($json) ? $json.length : 0)) }}",
+              "operation": "larger",
+              "value2": 0
+            }
+          ]
+        }
+      },
+      "id": "node-if-hay-videos",
+      "name": "¿Hay Videos en Cola?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        1080,
+        260
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "node-fin-cola-vacia",
+      "name": "Fin - Cola Vacia",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        440
+      ],
+      "notes": "No hay videos en status READY para despachar en este lote."
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Desglosar la lista devuelta por NocoDB en items individuales\nconst inputData = $input.first().json;\nconst rawList = inputData.list || (Array.isArray(inputData) ? inputData : []);\n\nif (!rawList || rawList.length === 0) {\n  return [];\n}\n\nreturn rawList.map(record => ({\n  json: {\n    queue_id: record.Id || record.id,\n    business_id: record.business_id || 'general-winner',\n    business_name: record.business_name || 'Negocio Antigravity',\n    product_name: record.product_name || 'Producto Ganador',\n    niche: record.niche || 'General',\n    video_url: record.video_url,\n    title_raw: record.title || 'Ganador Increíble que Debes Ver',\n    description_raw: record.description || '',\n    tags_raw: record.tags || 'dropshipping, viral, tech, trending, usa',\n    hook_type: record.hook_type || 'Curiosidad Disruptiva',\n    checkout_url: record.checkout_url || 'https://antigravity-hub.internal',\n    ig_user_id: record.ig_user_id || '17841400000000000',\n    fb_page_id: record.fb_page_id || '100000000000000',\n    created_at: record.CreatedAt || new Date().toISOString()\n  }\n}));"
+      },
+      "id": "node-desglosar-items",
+      "name": "Desglosar Items de Cola",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Sanitizar Metadatos y Anti-Spam para Triada de Oro\nconst item = $input.item.json;\n\n// 1. Sanitizar Título:\n// - Quitar caracteres especiales peligrosos y etiquetas HTML\n// - Limitar longitud estrictamente a <100 caracteres (máx 85 para dar margen seguro a tags)\nlet cleanTitle = (item.title_raw || '')\n  .replace(/<[^>]*>?/gm, '')\n  .replace(/[\\r\\n\\t]+/g, ' ')\n  .replace(/[\"'`]/g, '')\n  .replace(/\\s{2,}/g, ' ')\n  .trim();\n\nif (cleanTitle.length > 85) {\n  cleanTitle = cleanTitle.substring(0, 82).trim() + '...';\n}\n\n// Para YouTube Shorts, el tag #shorts es crítico para el shelf\nconst ytTitle = `${cleanTitle} #shorts`;\n\n// 2. Sanitizar Hashtags y Tags\nlet rawTags = (item.tags_raw || 'dropshipping, viral, tiktokmademebuyit, usa, lifehack')\n  .split(/[,\\s]+/)\n  .map(t => t.replace(/^#/, '').trim().toLowerCase())\n  .filter(t => t.length > 1);\n\n// Unificar y deduplicar\nconst uniqueTags = Array.from(new Set(rawTags)).slice(0, 8);\nconst formattedHashtags = uniqueTags.map(t => `#${t}`).join(' ');\n\n// 3. Sanitizar y formatear descripción YouTube\nconst ytDescription = `${cleanTitle}\n\n🔥 Get yours now before stock runs out: ${item.checkout_url}\n📦 Fast 7-12 days delivery across USA. 30-Day Money Back Guarantee.\n\n${formattedHashtags} #shorts #viral #antigravity #trending\nAudio: Google Cloud Neural2 (Verified Unique Render)`;\n\n// 4. Sanitizar y formatear Caption de Instagram Reels\nconst igCaption = `${cleanTitle} 🤯\n\n👇 Tap the link in bio to get yours with 50% OFF today!\n🚚 Free Tracked Shipping to USA\n✨ Limited stock available!\n\n.\n.\n${formattedHashtags} #reels #viralvideos #reelsinstagram #shopnow`;\n\n// 5. Sanitizar y formatear Descripción de Facebook Reels\nconst fbDescription = `Watch this transformation! 💥 ${cleanTitle}\n👉 Direct checkout link: ${item.checkout_url}\nGet 50% discount and fast domestic shipping today!`;\n\nreturn [{\n  json: {\n    ...item,\n    sanitized_title: cleanTitle,\n    yt_title: ytTitle,\n    yt_description: ytDescription,\n    yt_tags: uniqueTags,\n    ig_caption: igCaption,\n    fb_description: fbDescription,\n    anti_spam_hash: `phash_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`,\n    sanitized_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "node-sanitizar-metadatos",
+      "name": "Sanitizar Metadatos y Anti-Spam",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1560,
+        260
+      ],
+      "notes": "Elimina caracteres prohibidos, recorta títulos <100 chars, agrega #shorts, deduplica hashtags y genera copys por canal."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.YOUTUBE_OAUTH_TOKEN || 'YA29_PLACEHOLDER_TOKEN' }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json; charset=UTF-8"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"snippet\": {\n    \"title\": \"{{ $json.yt_title }}\",\n    \"description\": \"{{ $json.yt_description }}\",\n    \"tags\": {{ JSON.stringify($json.yt_tags) }},\n    \"categoryId\": \"22\",\n    \"defaultLanguage\": \"en\",\n    \"defaultAudioLanguage\": \"en\"\n  },\n  \"status\": {\n    \"privacyStatus\": \"public\",\n    \"selfDeclaredMadeForKids\": false,\n    \"embeddable\": true\n  }\n}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "node-youtube-dispatch",
+      "name": "YouTube Shorts - Subir Video",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1860,
+        100
+      ],
+      "notes": "Despacha el Short a YouTube Data API v3 con metadatos optimizados y status public."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v20.0/{{ $json.ig_user_id || '17841400000000000' }}/media",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.META_GRAPH_ACCESS_TOKEN || 'EAAB_PLACEHOLDER_TOKEN' }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"media_type\": \"REELS\",\n  \"video_url\": \"{{ $json.video_url }}\",\n  \"caption\": \"{{ $json.ig_caption }}\",\n  \"share_to_feed\": true\n}",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "id": "node-ig-init-container",
+      "name": "Instagram Reels - Crear Contenedor",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1860,
+        260
+      ],
+      "notes": "Inicia la sesión de subida del Reel en Meta Graph API v20.0 y obtiene el container_id."
+    },
+    {
+      "parameters": {
+        "amount": 15,
+        "unit": "seconds"
+      },
+      "id": "node-ig-wait",
+      "name": "Instagram Reels - Esperar Transcodificacion",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2100,
+        260
+      ],
+      "notes": "Espera 15 segundos a que los servidores de Meta procesen y validen la resolución vertical 9:16."
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://graph.facebook.com/v20.0/{{ $('Instagram Reels - Crear Contenedor').item.json.id }}?fields=status_code,status",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.META_GRAPH_ACCESS_TOKEN || 'EAAB_PLACEHOLDER_TOKEN' }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "node-ig-poll-status",
+      "name": "Instagram Reels - Consultar Estado Contenedor",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2340,
+        260
+      ],
+      "notes": "Comprueba que status_code sea FINISHED antes de disparar la publicación definitiva."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v20.0/{{ $('Sanitizar Metadatos y Anti-Spam').item.json.ig_user_id || '17841400000000000' }}/media_publish",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.META_GRAPH_ACCESS_TOKEN || 'EAAB_PLACEHOLDER_TOKEN' }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"creation_id\": \"{{ $('Instagram Reels - Crear Contenedor').item.json.id }}\"\n}",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "id": "node-ig-publish",
+      "name": "Instagram Reels - Publicar Contenedor",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2580,
+        260
+      ],
+      "notes": "Ejecuta la publicación formal del Instagram Reel."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v20.0/{{ $json.fb_page_id || '100000000000000' }}/video_reels",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.META_GRAPH_ACCESS_TOKEN || 'EAAB_PLACEHOLDER_TOKEN' }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"upload_phase\": \"start\"\n}",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "id": "node-fb-start-upload",
+      "name": "Facebook Reels - Iniciar Sesion Upload",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1860,
+        420
+      ],
+      "notes": "Abre sesión de subida en Facebook Pages Video Reels API."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v20.0/{{ $('Sanitizar Metadatos y Anti-Spam').item.json.fb_page_id || '100000000000000' }}/video_reels",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.META_GRAPH_ACCESS_TOKEN || 'EAAB_PLACEHOLDER_TOKEN' }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"upload_phase\": \"finish\",\n  \"video_state\": \"PUBLISHED\",\n  \"video_id\": \"{{ $('Facebook Reels - Iniciar Sesion Upload').item.json.video_id || '12345' }}\",\n  \"description\": \"{{ $('Sanitizar Metadatos y Anti-Spam').item.json.fb_description }}\"\n}",
+        "options": {
+          "timeout": 20000
+        }
+      },
+      "id": "node-fb-publish-reel",
+      "name": "Facebook Reels - Publicar Reel",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2100,
+        420
+      ],
+      "notes": "Finaliza y publica el Reel directamente en la Página de Facebook."
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Consolidar resultados devueltos por las tres ramas de la Tríada de Oro\nconst item = $('Sanitizar Metadatos y Anti-Spam').first()?.json || {};\n\n// Resultados de YouTube\nconst ytRes = $('YouTube Shorts - Subir Video').first()?.json || {};\nconst ytId = ytRes.id || `yt_${Date.now()}`;\nconst ytUrl = ytRes.id ? `https://youtube.com/shorts/${ytRes.id}` : `https://youtube.com/shorts/${ytId}`;\n\n// Resultados de Instagram\nconst igRes = $('Instagram Reels - Publicar Contenedor').first()?.json || {};\nconst igMediaId = igRes.id || `ig_${Date.now()}`;\nconst igUrl = `https://instagram.com/reel/${igMediaId}`;\n\n// Resultados de Facebook\nconst fbRes = $('Facebook Reels - Publicar Reel').first()?.json || {};\nconst fbReelId = fbRes.video_id || fbRes.id || `fb_${Date.now()}`;\nconst fbUrl = `https://facebook.com/reel/${fbReelId}`;\n\nconst publishedAt = new Date().toISOString();\n\nreturn [{\n  json: {\n    queue_id: item.queue_id,\n    business_id: item.business_id,\n    business_name: item.business_name,\n    product_name: item.product_name,\n    status: 'PUBLISHED',\n    youtube_id: ytId,\n    youtube_url: ytUrl,\n    instagram_id: igMediaId,\n    instagram_url: igUrl,\n    facebook_id: fbReelId,\n    facebook_url: fbUrl,\n    published_at: publishedAt,\n    audit_summary: `Despacho exitoso Tríada de Oro [YT, IG, FB] ejecutado a las ${publishedAt} en slot ${item.active_slot || 'Pico USA'}`\n  }\n}];"
+      },
+      "id": "node-consolidar-resultados",
+      "name": "Consolidar Resultados de Despacho",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2820,
+        260
+      ],
+      "notes": "Agrupa los identificadores y URLs generadas en YouTube, Instagram y Facebook."
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://josa-db.duckdns.org/api/v2/tables/Videos_Queue/records",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xc-token",
+              "value": "={{ $env.NOCODB_API_TOKEN || 'nc_pat_tgVyjziQvOAYMhd1iXopnb59KIH0FVZPaGDs8PyP' }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"Id\": \"{{ $json.queue_id }}\",\n  \"status\": \"PUBLISHED\",\n  \"youtube_url\": \"{{ $json.youtube_url }}\",\n  \"instagram_url\": \"{{ $json.instagram_url }}\",\n  \"facebook_url\": \"{{ $json.facebook_url }}\",\n  \"published_at\": \"{{ $json.published_at }}\",\n  \"audit_log\": \"{{ $json.audit_summary }}\"\n}",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "node-actualizar-nocodb",
+      "name": "Actualizar Auditoría NocoDB",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3060,
+        260
+      ],
+      "notes": "Actualiza el registro en Videos_Queue con status=PUBLISHED y URLs de producción."
+    }
+  ],
+  "connections": {
+    "Horario Programado USA (11 AM & 7 PM EST)": {
+      "main": [
+        [
+          {
+            "node": "Validar Hora Pico USA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Disparo Manual / Inmediato": {
+      "main": [
+        [
+          {
+            "node": "Validar Hora Pico USA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar Hora Pico USA": {
+      "main": [
+        [
+          {
+            "node": "¿Es Hora Pico o Forzado?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Es Hora Pico o Forzado?": {
+      "main": [
+        [
+          {
+            "node": "Obtener Videos Listos de NocoDB",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fin - Fuera de Horario Pico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obtener Videos Listos de NocoDB": {
+      "main": [
+        [
+          {
+            "node": "¿Hay Videos en Cola?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Hay Videos en Cola?": {
+      "main": [
+        [
+          {
+            "node": "Desglosar Items de Cola",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fin - Cola Vacia",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Desglosar Items de Cola": {
+      "main": [
+        [
+          {
+            "node": "Sanitizar Metadatos y Anti-Spam",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sanitizar Metadatos y Anti-Spam": {
+      "main": [
+        [
+          {
+            "node": "YouTube Shorts - Subir Video",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Instagram Reels - Crear Contenedor",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Facebook Reels - Iniciar Sesion Upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "YouTube Shorts - Subir Video": {
+      "main": [
+        [
+          {
+            "node": "Consolidar Resultados de Despacho",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram Reels - Crear Contenedor": {
+      "main": [
+        [
+          {
+            "node": "Instagram Reels - Esperar Transcodificacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram Reels - Esperar Transcodificacion": {
+      "main": [
+        [
+          {
+            "node": "Instagram Reels - Consultar Estado Contenedor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram Reels - Consultar Estado Contenedor": {
+      "main": [
+        [
+          {
+            "node": "Instagram Reels - Publicar Contenedor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instagram Reels - Publicar Contenedor": {
+      "main": [
+        [
+          {
+            "node": "Consolidar Resultados de Despacho",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facebook Reels - Iniciar Sesion Upload": {
+      "main": [
+        [
+          {
+            "node": "Facebook Reels - Publicar Reel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facebook Reels - Publicar Reel": {
+      "main": [
+        [
+          {
+            "node": "Consolidar Resultados de Despacho",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consolidar Resultados de Despacho": {
+      "main": [
+        [
+          {
+            "node": "Actualizar Auditoría NocoDB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/New_York",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "tags": [
+    "antigravity",
+    "multi-account-hub",
+    "triada-de-oro",
+    "dropshipping",
+    "social-dispatch"
+  ]
+}

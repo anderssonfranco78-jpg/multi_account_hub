@@ -1,0 +1,9 @@
+# Multi-Account Hub — Dependency Manifest
+# Designed with standard-library-first architecture for zero-friction portability
+# across Windows PowerShell, macOS, Linux VPS (Hetzner Docker) and CI runners.
+
+# Python standard library modules utilized:
+# - json, os, sys, tempfile, threading, math, datetime, typing, argparse, unittest
+
+# Optional utilities for extended development, testing, and linting:
+typing-extensions>=4.8.0; python_version < "3.10"
