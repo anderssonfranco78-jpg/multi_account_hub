@@ -60,8 +60,8 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
         "enlace_tienda": "https://trysteamfur.com/products/pet-brush",
         "cluster_canales": {
             "youtube_shorts": {
-                "handle": "@SteamFurOfficial",
-                "canal_url": "https://youtube.com/@SteamFurOfficial",
+                "handle": "@SteamFurPro",
+                "canal_url": "https://www.youtube.com/channel/UCpJo7z99cTA1DFC36nK0Zng",
                 "estado": "activo",
                 "seguidores": 4250,
                 "reproducciones_totales": 128400,
@@ -69,8 +69,8 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
                 "ultimo_post": "2026-09-23T15:00:00Z",
             },
             "instagram_reels": {
-                "handle": "@steamfur_us",
-                "canal_url": "https://instagram.com/steamfur_us",
+                "handle": "@steamfurpro",
+                "canal_url": "https://www.instagram.com/steamfurpro",
                 "estado": "activo",
                 "seguidores": 3890,
                 "reproducciones_totales": 96200,
@@ -78,8 +78,8 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
                 "ultimo_post": "2026-09-23T23:00:00Z",
             },
             "facebook_reels": {
-                "handle": "SteamFur Pet Care Official",
-                "canal_url": "https://facebook.com/steamfur_official",
+                "handle": "SteamFur Pro Official",
+                "canal_url": "https://www.facebook.com/profile.php?id=61594892791830",
                 "estado": "activo",
                 "seguidores": 1920,
                 "reproducciones_totales": 45100,
