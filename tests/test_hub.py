@@ -87,15 +87,6 @@ class BaseHubTestCase(unittest.TestCase):
                     "videos_publicados": 10,
                     "ultimo_post": "2026-09-23T23:00:00Z",
                 },
-                "tiktok": {
-                    "handle": f"@{b_id}_tk",
-                    "canal_url": f"https://tiktok.com/@{b_id}",
-                    "estado": "calentamiento",
-                    "seguidores": 50,
-                    "reproducciones_totales": 500,
-                    "videos_publicados": 0,
-                    "ultimo_post": None,
-                },
             },
             "metricas_resumen": {
                 "videos_hoy": 2,
@@ -237,8 +228,8 @@ class TestBusinessCRUD(BaseHubTestCase):
         self.assertIn("youtube_shorts", channels)
         self.assertIn("instagram_reels", channels)
         self.assertIn("facebook_reels", channels)
-        self.assertIn("tiktok", channels)
-        self.assertEqual(channels["tiktok"]["estado"], "calentamiento")
+        self.assertNotIn("tiktok", channels)
+        self.assertEqual(len(channels), 3)
 
     def test_get_business_success(self):
         mock_b = self.create_mock_business(b_id="fetch-me")

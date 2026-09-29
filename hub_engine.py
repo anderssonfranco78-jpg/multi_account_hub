@@ -31,6 +31,32 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 # Canonical Schema Version
 SCHEMA_VERSION = "1.0.0"
 
+
+def parse_iso_datetime(dt_str: Optional[str]) -> Optional[datetime]:
+    """
+    Robust ISO-8601 datetime parser supporting UTC 'Z' suffixes, timezone offsets,
+    and simple YYYY-MM-DD date strings. Returns timezone-aware datetime in UTC,
+    or None if input is invalid, empty, or None.
+    """
+    if not dt_str or not isinstance(dt_str, str):
+        return None
+    cleaned = dt_str.strip()
+    if not cleaned:
+        return None
+    try:
+        if cleaned.endswith("Z"):
+            cleaned = cleaned[:-1] + "+00:00"
+        dt = datetime.fromisoformat(cleaned)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt
+    except (ValueError, TypeError):
+        try:
+            return datetime.strptime(cleaned, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        except (ValueError, TypeError):
+            return None
+
+
 # Default seed data for the 4 initial validated winning products from Dropshipping Hunter
 INITIAL_BUSINESSES: List[Dict[str, Any]] = [
     {
@@ -40,21 +66,23 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
         "producto_asociado": {
             "nombre_completo": "SteamFur Pro™ — Cepillo de Vapor Iónico 3 en 1 para Mascotas",
             "categoria": "Pet Supplies & Home Care",
-            "descripcion": (
-                "Conical silicone pet brush with integrated cold ion ultrasonic mist "
-                "that neutralizes static and allows peeling off shed pet hair in a single solid sheet in 2 seconds."
-            ),
+            "descripcion": "Conical silicone pet brush with integrated cold ion ultrasonic mist that neutralizes static and allows peeling off shed pet hair in a single solid sheet in 2 seconds.",
             "precio_sugerido_usd": 29.99,
-            "costo_proveedor_usd": 1.00,
-            "costo_envio_usd": 2.50,
-            "costo_puesto_usd": 3.50,
+            "costo_proveedor_usd": 1.0,
+            "costo_envio_usd": 2.5,
+            "costo_puesto_usd": 3.5,
             "beneficio_neto_usd": 25.02,
             "margen_neto_pct": 83.43,
             "markup_multiplier": 8.57,
             "proveedor_url": "https://www.aliexpress.com/w/wholesale-steamy-cat-brush.html",
             "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=steamy%20pet%20brush",
             "linea_logistica": "YunExpress Ordinary / CJPacket Fast Line (7 - 10 días laborables)",
-            "paises_objetivo": ["US", "CA", "UK", "AU"],
+            "paises_objetivo": [
+                "US",
+                "CA",
+                "UK",
+                "AU"
+            ]
         },
         "score_hunter": 100.0,
         "enlace_tienda": "https://trysteamfur.com/products/pet-brush",
@@ -63,39 +91,29 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
                 "handle": "@SteamFurPro",
                 "canal_url": "https://www.youtube.com/channel/UCpJo7z99cTA1DFC36nK0Zng",
                 "estado": "activo",
-                "seguidores": 4250,
-                "reproducciones_totales": 128400,
-                "videos_publicados": 18,
-                "ultimo_post": "2026-09-23T15:00:00Z",
+                "seguidores": 0,
+                "reproducciones_totales": 0,
+                "videos_publicados": 0,
+                "ultimo_post": None
             },
             "instagram_reels": {
                 "handle": "@steamfurpro",
                 "canal_url": "https://www.instagram.com/steamfurpro",
                 "estado": "activo",
-                "seguidores": 3890,
-                "reproducciones_totales": 96200,
-                "videos_publicados": 18,
-                "ultimo_post": "2026-09-23T23:00:00Z",
+                "seguidores": 0,
+                "reproducciones_totales": 0,
+                "videos_publicados": 0,
+                "ultimo_post": None
             },
             "facebook_reels": {
                 "handle": "SteamFur Pro Official",
                 "canal_url": "https://www.facebook.com/profile.php?id=61594892791830",
                 "estado": "activo",
-                "seguidores": 1920,
-                "reproducciones_totales": 45100,
-                "videos_publicados": 14,
-                "ultimo_post": "2026-09-23T23:00:00Z",
-            },
-            "tiktok": {
-                "handle": "@trysteamfur_usa",
-                "canal_url": "https://tiktok.com/@trysteamfur_usa",
-                "estado": "calentamiento",
-                "seguidores": 310,
-                "reproducciones_totales": 3200,
+                "seguidores": 0,
+                "reproducciones_totales": 0,
                 "videos_publicados": 0,
-                "ultimo_post": None,
-                "burner_phone_id": "Burner-Phone-Pixel4a-SIM-MintUS-01",
-            },
+                "ultimo_post": None
+            }
         },
         "credenciales_aisladas": {
             "correo_gestion": "ops.steamfur@gmail.com",
@@ -106,82 +124,57 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
             "n8n_credential_ref": "n8n_cred_steamfur_meta_v3",
             "api_keys_refs": {
                 "youtube_api_env": "YT_API_KEY_STEAMFUR",
-                "meta_graph_env": "META_TOKEN_STEAMFUR",
-            },
+                "meta_graph_env": "META_TOKEN_STEAMFUR"
+            }
         },
         "metricas_resumen": {
-            "videos_hoy": 2,
-            "vistas_hoy": 14200,
-            "clics_tienda_hoy": 84,
-            "vistas_ultimos_7_dias": 89400,
-            "tasa_conversion_bio_pct": 1.25,
+            "videos_hoy": 0,
+            "vistas_hoy": 0,
+            "clics_tienda_hoy": 0,
+            "vistas_ultimos_7_dias": 0,
+            "tasa_conversion_bio_pct": 0.0,
             "dias_sin_publicar": 0,
-            "account_health_score": 96.5,
-            "health_status": "optimo",
+            "account_health_score": 95.0,
+            "health_status": "optimo"
         },
-        "historial_metricas": [
-            {
-                "fecha": "2026-09-21",
-                "videos_publicados": 2,
-                "vistas": 12800,
-                "likes": 980,
-                "clics_checkout": 68,
-                "pedidos": 5,
-                "health_score": 94.0,
-            },
-            {
-                "fecha": "2026-09-22",
-                "videos_publicados": 2,
-                "vistas": 13900,
-                "likes": 1120,
-                "clics_checkout": 79,
-                "pedidos": 7,
-                "health_score": 95.8,
-            },
-            {
-                "fecha": "2026-09-23",
-                "videos_publicados": 2,
-                "vistas": 14200,
-                "likes": 1150,
-                "clics_checkout": 84,
-                "pedidos": 6,
-                "health_score": 96.5,
-            },
-        ],
+        "historial_metricas": [],
         "ganchos_conversion": {
             "gancho_1_curiosidad": {
                 "nombre": "Curiosidad Disruptiva: La Manta de Pelo Extraída en 3 Segundos",
                 "voz_cliente": "¿Por qué los veterinarios aconsejan no cepillar a tu gato en seco nunca más?",
                 "voz_creador": "Porque el vapor frío ionizado neutraliza la estática y retira el pelo muerto en una manta sólida.",
                 "sfx": "STEAM_HISS",
-                "texto_3d": "¿NO EN SECO?",
+                "texto_3d": "¿NO EN SECO?"
             },
             "gancho_2_agitacion": {
                 "nombre": "Agitación de Dolor Real: La Pesadilla de los Pelos en Toda la Casa",
                 "voz_cliente": "¿Cansado de encontrar pelos de gato en tu ropa, en el sofá y hasta en tu comida?",
                 "voz_creador": "El cepillado común solo esparce los pelos por el aire; esto los atrapa al 100%.",
                 "sfx": "RECORD_SCRATCH",
-                "texto_3d": "¿PELOS EN TU COMIDA?",
+                "texto_3d": "¿PELOS EN TU COMIDA?"
             },
             "gancho_3_contrariano": {
                 "nombre": "Contrariano: La Trampa de los Rodillos de Pegamento Adhesivo",
                 "voz_cliente": "Por qué los rodillos adhesivos de papel son el peor gasto para dueños de mascotas...",
                 "voz_creador": "Gastas una fortuna en rollos que no quitan la raíz del pelaje suelto.",
                 "sfx": "TRASH_SLAM",
-                "texto_3d": "DINERO PERDIDO",
+                "texto_3d": "DINERO PERDIDO"
             },
             "gancho_4_transformacion": {
                 "nombre": "Transformación Inmediata: De la Lucha del Baño al Placer del Vapor",
                 "voz_cliente": "De pasar 40 minutos persiguiendo a tu mascota con un cepillo que la estresa...",
                 "voz_creador": "A retirarle toda la capa muerta en 3 minutos mientras disfruta de un masaje de vapor.",
                 "sfx": "PURR_SOFT",
-                "texto_3d": "SPA EN CASA",
-            },
+                "texto_3d": "SPA EN CASA"
+            }
         },
-        "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
+        "horarios_publicacion_est": [
+            "11:00 AM",
+            "07:00 PM"
+        ],
         "status": "activo",
         "created_at": "2026-09-20T12:00:00Z",
-        "updated_at": "2026-09-23T23:00:00Z",
+        "updated_at": "2026-09-23T23:00:00Z"
     },
     {
         "id": "prosmile-ultrasonic",
@@ -190,21 +183,23 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
         "producto_asociado": {
             "nombre_completo": "ProSmile Ultrasonic™ — Limpiador Dental Ultrasónico de Sarro y Placa",
             "categoria": "Dental Health & Personal Care",
-            "descripcion": (
-                "Home dental hygiene scaler with 40 kHz acoustic micro-vibrations and bioelectric sensor "
-                "that shatters solid calculus instantly while stopping automatically on gums."
-            ),
+            "descripcion": "Home dental hygiene scaler with 40 kHz acoustic micro-vibrations and bioelectric sensor that shatters solid calculus instantly while stopping automatically on gums.",
             "precio_sugerido_usd": 34.99,
-            "costo_proveedor_usd": 4.50,
-            "costo_envio_usd": 3.70,
-            "costo_puesto_usd": 8.20,
+            "costo_proveedor_usd": 4.5,
+            "costo_envio_usd": 3.7,
+            "costo_puesto_usd": 8.2,
             "beneficio_neto_usd": 25.13,
             "margen_neto_pct": 71.82,
             "markup_multiplier": 4.27,
             "proveedor_url": "https://www.aliexpress.com/w/wholesale-ultrasonic-dental-calculus-remover.html",
             "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=ultrasonic%20tooth%20cleaner",
             "linea_logistica": "CJPacket Fast Line / YunExpress Ordinary (7 - 10 días laborables)",
-            "paises_objetivo": ["US", "UK", "DE", "AU"],
+            "paises_objetivo": [
+                "US",
+                "UK",
+                "DE",
+                "AU"
+            ]
         },
         "score_hunter": 100.0,
         "enlace_tienda": "https://getprosmile.com/products/ultrasonic-scaler",
@@ -212,40 +207,30 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
             "youtube_shorts": {
                 "handle": "@ProSmileDental",
                 "canal_url": "https://youtube.com/@ProSmileDental",
-                "estado": "activo",
-                "seguidores": 5120,
-                "reproducciones_totales": 142300,
-                "videos_publicados": 20,
-                "ultimo_post": "2026-09-23T15:00:00Z",
+                "estado": "pausado",
+                "seguidores": 0,
+                "reproducciones_totales": 0,
+                "videos_publicados": 0,
+                "ultimo_post": None
             },
             "instagram_reels": {
                 "handle": "@prosmile_smile",
                 "canal_url": "https://instagram.com/prosmile_smile",
-                "estado": "activo",
-                "seguidores": 4430,
-                "reproducciones_totales": 118700,
-                "videos_publicados": 20,
-                "ultimo_post": "2026-09-23T23:00:00Z",
+                "estado": "pausado",
+                "seguidores": 0,
+                "reproducciones_totales": 0,
+                "videos_publicados": 0,
+                "ultimo_post": None
             },
             "facebook_reels": {
                 "handle": "ProSmile Oral Care",
                 "canal_url": "https://facebook.com/prosmile_oralcare",
-                "estado": "activo",
-                "seguidores": 2410,
-                "reproducciones_totales": 52800,
-                "videos_publicados": 16,
-                "ultimo_post": "2026-09-23T23:00:00Z",
-            },
-            "tiktok": {
-                "handle": "@getprosmile_usa",
-                "canal_url": "https://tiktok.com/@getprosmile_usa",
-                "estado": "calentamiento",
-                "seguidores": 420,
-                "reproducciones_totales": 4800,
+                "estado": "pausado",
+                "seguidores": 0,
+                "reproducciones_totales": 0,
                 "videos_publicados": 0,
-                "ultimo_post": None,
-                "burner_phone_id": "Burner-Phone-Pixel5-SIM-UltraMobileUS-02",
-            },
+                "ultimo_post": None
+            }
         },
         "credenciales_aisladas": {
             "correo_gestion": "ops.prosmile@gmail.com",
@@ -256,82 +241,57 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
             "n8n_credential_ref": "n8n_cred_prosmile_meta_v3",
             "api_keys_refs": {
                 "youtube_api_env": "YT_API_KEY_PROSMILE",
-                "meta_graph_env": "META_TOKEN_PROSMILE",
-            },
+                "meta_graph_env": "META_TOKEN_PROSMILE"
+            }
         },
         "metricas_resumen": {
-            "videos_hoy": 2,
-            "vistas_hoy": 16800,
-            "clics_tienda_hoy": 98,
-            "vistas_ultimos_7_dias": 104500,
-            "tasa_conversion_bio_pct": 1.38,
+            "videos_hoy": 0,
+            "vistas_hoy": 0,
+            "clics_tienda_hoy": 0,
+            "vistas_ultimos_7_dias": 0,
+            "tasa_conversion_bio_pct": 0.0,
             "dias_sin_publicar": 0,
-            "account_health_score": 97.2,
-            "health_status": "optimo",
+            "account_health_score": 75.0,
+            "health_status": "en_espera"
         },
-        "historial_metricas": [
-            {
-                "fecha": "2026-09-21",
-                "videos_publicados": 2,
-                "vistas": 14900,
-                "likes": 1150,
-                "clics_checkout": 82,
-                "pedidos": 7,
-                "health_score": 95.0,
-            },
-            {
-                "fecha": "2026-09-22",
-                "videos_publicados": 2,
-                "vistas": 15800,
-                "likes": 1280,
-                "clics_checkout": 91,
-                "pedidos": 8,
-                "health_score": 96.4,
-            },
-            {
-                "fecha": "2026-09-23",
-                "videos_publicados": 2,
-                "vistas": 16800,
-                "likes": 1390,
-                "clics_checkout": 98,
-                "pedidos": 9,
-                "health_score": 97.2,
-            },
-        ],
+        "historial_metricas": [],
         "ganchos_conversion": {
             "gancho_1_curiosidad": {
                 "nombre": "Curiosidad Disruptiva: El Metal que No Rompe Huevos",
                 "voz_cliente": "¿Cómo es posible que esto rompa piedra pero no pueda reventar un globo?",
                 "voz_creador": "Porque tiene un sensor acústico que solo se activa al tocar sarro duro.",
                 "sfx": "RECORD_SCRATCH_QUICK",
-                "texto_3d": "¿ROMPE PIEDRA?",
+                "texto_3d": "¿ROMPE PIEDRA?"
             },
             "gancho_2_agitacion": {
                 "nombre": "Agitación de Dolor Real: La Vergüenza de Sonreír en Fotos",
                 "voz_cliente": "Si dejas de sonreír en las fotos porque te da vergüenza el sarro amarillo acumulado...",
                 "voz_creador": "Y no tienes $300 de sobra para pagarle al dentista cada 6 meses...",
                 "sfx": "HEARTBEAT_DULL",
-                "texto_3d": "¿VERGÜENZA AL SONREÍR?",
+                "texto_3d": "¿VERGÜENZA AL SONREÍR?"
             },
             "gancho_3_contrariano": {
                 "nombre": "Contrariano: Por qué tu Cepillo de $120 No Sirve para el Sarro",
                 "voz_cliente": "Por qué cepillarte 3 veces al día jamás quitará el sarro duro de tus dientes...",
                 "voz_creador": "El sarro es piedra caliza sólida; el cepillo de cerdas solo le hace cosquillas.",
                 "sfx": "BRUSH_SCRUB_FAST",
-                "texto_3d": "NO LO QUITA",
+                "texto_3d": "NO LO QUITA"
             },
             "gancho_4_transformacion": {
                 "nombre": "Transformación Inmediata: De 5 Años de Sarro a Dientes de Seda",
                 "voz_cliente": "De tener 5 años de sarro y manchas de tabaco pegadas a los dientes...",
                 "voz_creador": "A dejarlos con textura de seda y completamente limpios en 10 minutos.",
                 "sfx": "SAD_SCRATCH",
-                "texto_3d": "TEXTURA DE SEDA",
-            },
+                "texto_3d": "TEXTURA DE SEDA"
+            }
         },
-        "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
-        "status": "activo",
+        "horarios_publicacion_est": [
+            "11:00 AM",
+            "07:00 PM"
+        ],
+        "status": "en_preparacion",
         "created_at": "2026-09-19T10:00:00Z",
-        "updated_at": "2026-09-23T23:00:00Z",
+        "updated_at": "2026-09-23T23:00:00Z"
     },
     {
         "id": "spinerelief-pro",
@@ -340,21 +300,23 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
         "producto_asociado": {
             "nombre_completo": "SpineRelief Pro™ — Cinturón Neumático de Descompresión Lumbar L1-L5",
             "categoria": "Health & Ergonomics",
-            "descripcion": (
-                "Clinical-grade inflatable lumbar traction belt with 24 pneumatic columns "
-                "providing 2.5 bar decompression for L1-L5 vertebrae and acute sciatica nerve relief."
-            ),
+            "descripcion": "Clinical-grade inflatable lumbar traction belt with 24 pneumatic columns providing 2.5 bar decompression for L1-L5 vertebrae and acute sciatica nerve relief.",
             "precio_sugerido_usd": 54.99,
-            "costo_proveedor_usd": 10.00,
-            "costo_envio_usd": 4.80,
-            "costo_puesto_usd": 14.80,
+            "costo_proveedor_usd": 10.0,
+            "costo_envio_usd": 4.8,
+            "costo_puesto_usd": 14.8,
             "beneficio_neto_usd": 37.75,
             "margen_neto_pct": 68.65,
             "markup_multiplier": 3.72,
             "proveedor_url": "https://www.aliexpress.com/w/wholesale-lumbar-traction-belt.html",
             "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=lumbar%20traction%20belt",
             "linea_logistica": "YunExpress Specialty Line (7 - 10 días laborables)",
-            "paises_objetivo": ["US", "UK", "CA", "AU"],
+            "paises_objetivo": [
+                "US",
+                "UK",
+                "CA",
+                "AU"
+            ]
         },
         "score_hunter": 97.0,
         "enlace_tienda": "https://spinerelief.store/products/traction-belt",
@@ -362,40 +324,30 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
             "youtube_shorts": {
                 "handle": "@SpineReliefTech",
                 "canal_url": "https://youtube.com/@SpineReliefTech",
-                "estado": "activo",
-                "seguidores": 3480,
-                "reproducciones_totales": 89500,
-                "videos_publicados": 16,
-                "ultimo_post": "2026-09-23T15:00:00Z",
+                "estado": "pausado",
+                "seguidores": 0,
+                "reproducciones_totales": 0,
+                "videos_publicados": 0,
+                "ultimo_post": None
             },
             "instagram_reels": {
                 "handle": "@spinerelief_us",
                 "canal_url": "https://instagram.com/spinerelief_us",
-                "estado": "activo",
-                "seguidores": 3120,
-                "reproducciones_totales": 72400,
-                "videos_publicados": 16,
-                "ultimo_post": "2026-09-23T23:00:00Z",
+                "estado": "pausado",
+                "seguidores": 0,
+                "reproducciones_totales": 0,
+                "videos_publicados": 0,
+                "ultimo_post": None
             },
             "facebook_reels": {
                 "handle": "SpineRelief Official",
                 "canal_url": "https://facebook.com/spinerelief_official",
-                "estado": "activo",
-                "seguidores": 1840,
-                "reproducciones_totales": 38600,
-                "videos_publicados": 12,
-                "ultimo_post": "2026-09-23T23:00:00Z",
-            },
-            "tiktok": {
-                "handle": "@spinerelief_usa",
-                "canal_url": "https://tiktok.com/@spinerelief_usa",
-                "estado": "calentamiento",
-                "seguidores": 280,
-                "reproducciones_totales": 2900,
+                "estado": "pausado",
+                "seguidores": 0,
+                "reproducciones_totales": 0,
                 "videos_publicados": 0,
-                "ultimo_post": None,
-                "burner_phone_id": "Burner-Phone-GalaxyS10-SIM-MintUS-03",
-            },
+                "ultimo_post": None
+            }
         },
         "credenciales_aisladas": {
             "correo_gestion": "ops.spinerelief@gmail.com",
@@ -406,82 +358,57 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
             "n8n_credential_ref": "n8n_cred_spinerelief_meta_v3",
             "api_keys_refs": {
                 "youtube_api_env": "YT_API_KEY_SPINERELIEF",
-                "meta_graph_env": "META_TOKEN_SPINERELIEF",
-            },
+                "meta_graph_env": "META_TOKEN_SPINERELIEF"
+            }
         },
         "metricas_resumen": {
-            "videos_hoy": 2,
-            "vistas_hoy": 11300,
-            "clics_tienda_hoy": 65,
-            "vistas_ultimos_7_dias": 68900,
-            "tasa_conversion_bio_pct": 1.18,
+            "videos_hoy": 0,
+            "vistas_hoy": 0,
+            "clics_tienda_hoy": 0,
+            "vistas_ultimos_7_dias": 0,
+            "tasa_conversion_bio_pct": 0.0,
             "dias_sin_publicar": 0,
-            "account_health_score": 95.1,
-            "health_status": "optimo",
+            "account_health_score": 75.0,
+            "health_status": "en_espera"
         },
-        "historial_metricas": [
-            {
-                "fecha": "2026-09-21",
-                "videos_publicados": 2,
-                "vistas": 10200,
-                "likes": 780,
-                "clics_checkout": 54,
-                "pedidos": 4,
-                "health_score": 93.5,
-            },
-            {
-                "fecha": "2026-09-22",
-                "videos_publicados": 2,
-                "vistas": 10800,
-                "likes": 840,
-                "clics_checkout": 59,
-                "pedidos": 5,
-                "health_score": 94.2,
-            },
-            {
-                "fecha": "2026-09-23",
-                "videos_publicados": 2,
-                "vistas": 11300,
-                "likes": 910,
-                "clics_checkout": 65,
-                "pedidos": 6,
-                "health_score": 95.1,
-            },
-        ],
+        "historial_metricas": [],
         "ganchos_conversion": {
             "gancho_1_curiosidad": {
                 "nombre": "Curiosidad Disruptiva: El Secreto Médico Prohibido",
                 "voz_cliente": "¿Por qué los camioneros tienen prohibido manejar sin inflarse esto?",
                 "voz_creador": "Porque en 30 segundos separa tus vértebras 7 milímetros.",
                 "sfx": "WHOOSH_FAST",
-                "texto_3d": "¿PROHIBIDO?",
+                "texto_3d": "¿PROHIBIDO?"
             },
             "gancho_2_agitacion": {
                 "nombre": "Agitación de Dolor Real: El Ardor Lumbar al Levantarte",
                 "voz_cliente": "Si levantarte de la cama o del auto te toma 5 minutos por ese ardor lumbar...",
                 "voz_creador": "Tus vértebras están aplastando este nervio ahora mismo.",
                 "sfx": "HEARTBEAT_LOW",
-                "texto_3d": "¿ARDOR LUMBAR?",
+                "texto_3d": "¿ARDOR LUMBAR?"
             },
             "gancho_3_contrariano": {
                 "nombre": "Contrariano: La Farsa de las Fajas de Farmacia",
                 "voz_cliente": "Por qué gastar $150 en fajas de farmacia empeora tu dolor de espalda...",
                 "voz_creador": "Porque apretar tu abdomen no separa tus huesos.",
                 "sfx": "TRASH_SLAM",
-                "texto_3d": "NO SIRVEN",
+                "texto_3d": "NO SIRVEN"
             },
             "gancho_4_transformacion": {
                 "nombre": "Transformación Inmediata: De la Incapacidad a la Plenitud",
                 "voz_cliente": "De no poder atarte las zapatillas por el dolor de ciática...",
                 "voz_creador": "A pasar 6 horas de pie sin un solo tirón lumbar.",
                 "sfx": "RECORD_SCRATCH",
-                "texto_3d": "ANTES / DESPUÉS",
-            },
+                "texto_3d": "ANTES / DESPUÉS"
+            }
         },
-        "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
-        "status": "activo",
+        "horarios_publicacion_est": [
+            "11:00 AM",
+            "07:00 PM"
+        ],
+        "status": "en_preparacion",
         "created_at": "2026-09-20T14:00:00Z",
-        "updated_at": "2026-09-23T23:00:00Z",
+        "updated_at": "2026-09-23T23:00:00Z"
     },
     {
         "id": "aeroforce-x3",
@@ -490,21 +417,23 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
         "producto_asociado": {
             "nombre_completo": "AeroForce X3™ — Micro-Turbina Violenta de 130,000 RPM para Secado y Detailing",
             "categoria": "Automotive & Tactical Tools",
-            "descripcion": (
-                "Handheld micro-turbine jet fan with 130,000 RPM brushless motor delivering "
-                "52 m/s wind speed for contact-free car drying, detailing, and keyboard cleaning without swirl marks."
-            ),
+            "descripcion": "Handheld micro-turbine jet fan with 130,000 RPM brushless motor delivering 52 m/s wind speed for contact-free car drying, detailing, and keyboard cleaning without swirl marks.",
             "precio_sugerido_usd": 59.99,
-            "costo_proveedor_usd": 12.00,
-            "costo_envio_usd": 4.80,
-            "costo_puesto_usd": 16.80,
+            "costo_proveedor_usd": 12.0,
+            "costo_envio_usd": 4.8,
+            "costo_puesto_usd": 16.8,
             "beneficio_neto_usd": 40.55,
             "margen_neto_pct": 67.59,
             "markup_multiplier": 3.57,
             "proveedor_url": "https://www.aliexpress.com/w/wholesale-turbo-jet-fan.html",
             "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=turbo%20jet%20fan",
             "linea_logistica": "YunExpress Special Battery Line / CJPacket Sensitive (UN38.3) (8 - 11 días hábiles)",
-            "paises_objetivo": ["US", "CA", "AU", "UK"],
+            "paises_objetivo": [
+                "US",
+                "CA",
+                "AU",
+                "UK"
+            ]
         },
         "score_hunter": 97.0,
         "enlace_tienda": "https://aeroforcejet.com/products/x3-turbo-fan",
@@ -512,40 +441,30 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
             "youtube_shorts": {
                 "handle": "@AeroForceTurbine",
                 "canal_url": "https://youtube.com/@AeroForceTurbine",
-                "estado": "activo",
-                "seguidores": 3950,
-                "reproducciones_totales": 112000,
-                "videos_publicados": 18,
-                "ultimo_post": "2026-09-23T15:00:00Z",
+                "estado": "pausado",
+                "seguidores": 0,
+                "reproducciones_totales": 0,
+                "videos_publicados": 0,
+                "ultimo_post": None
             },
             "instagram_reels": {
                 "handle": "@aeroforce_x3",
                 "canal_url": "https://instagram.com/aeroforce_x3",
-                "estado": "activo",
-                "seguidores": 3610,
-                "reproducciones_totales": 88400,
-                "videos_publicados": 18,
-                "ultimo_post": "2026-09-23T23:00:00Z",
+                "estado": "pausado",
+                "seguidores": 0,
+                "reproducciones_totales": 0,
+                "videos_publicados": 0,
+                "ultimo_post": None
             },
             "facebook_reels": {
                 "handle": "AeroForce Jet Fan",
                 "canal_url": "https://facebook.com/aeroforce_fan",
-                "estado": "activo",
-                "seguidores": 1750,
-                "reproducciones_totales": 41200,
-                "videos_publicados": 14,
-                "ultimo_post": "2026-09-23T23:00:00Z",
-            },
-            "tiktok": {
-                "handle": "@aeroforce_usa",
-                "canal_url": "https://tiktok.com/@aeroforce_usa",
-                "estado": "calentamiento",
-                "seguidores": 295,
-                "reproducciones_totales": 3100,
+                "estado": "pausado",
+                "seguidores": 0,
+                "reproducciones_totales": 0,
                 "videos_publicados": 0,
-                "ultimo_post": None,
-                "burner_phone_id": "Burner-Phone-Pixel4-SIM-TelloUS-04",
-            },
+                "ultimo_post": None
+            }
         },
         "credenciales_aisladas": {
             "correo_gestion": "ops.aeroforce@gmail.com",
@@ -556,104 +475,59 @@ INITIAL_BUSINESSES: List[Dict[str, Any]] = [
             "n8n_credential_ref": "n8n_cred_aeroforce_meta_v3",
             "api_keys_refs": {
                 "youtube_api_env": "YT_API_KEY_AEROFORCE",
-                "meta_graph_env": "META_TOKEN_AEROFORCE",
-            },
+                "meta_graph_env": "META_TOKEN_AEROFORCE"
+            }
         },
         "metricas_resumen": {
-            "videos_hoy": 2,
-            "vistas_hoy": 13500,
-            "clics_tienda_hoy": 78,
-            "vistas_ultimos_7_dias": 81200,
-            "tasa_conversion_bio_pct": 1.22,
+            "videos_hoy": 0,
+            "vistas_hoy": 0,
+            "clics_tienda_hoy": 0,
+            "vistas_ultimos_7_dias": 0,
+            "tasa_conversion_bio_pct": 0.0,
             "dias_sin_publicar": 0,
-            "account_health_score": 96.0,
-            "health_status": "optimo",
+            "account_health_score": 75.0,
+            "health_status": "en_espera"
         },
-        "historial_metricas": [
-            {
-                "fecha": "2026-09-21",
-                "videos_publicados": 2,
-                "vistas": 11900,
-                "likes": 890,
-                "clics_checkout": 62,
-                "pedidos": 5,
-                "health_score": 93.8,
-            },
-            {
-                "fecha": "2026-09-22",
-                "videos_publicados": 2,
-                "vistas": 12700,
-                "likes": 980,
-                "clics_checkout": 71,
-                "pedidos": 6,
-                "health_score": 95.0,
-            },
-            {
-                "fecha": "2026-09-23",
-                "videos_publicados": 2,
-                "vistas": 13500,
-                "likes": 1050,
-                "clics_checkout": 78,
-                "pedidos": 7,
-                "health_score": 96.0,
-            },
-        ],
+        "historial_metricas": [],
         "ganchos_conversion": {
             "gancho_1_curiosidad": {
                 "nombre": "Curiosidad Disruptiva: Un Motor de Caza en el Bolsillo",
                 "voz_cliente": "¿Cómo es legal tener un motor de avión en el bolsillo?",
                 "voz_creador": "130,000 revoluciones por minuto. Esto no es un juguete.",
                 "sfx": "AIR_BLAST_WHOOSH",
-                "texto_3d": "¿CÓMO ES LEGAL?",
+                "texto_3d": "¿CÓMO ES LEGAL?"
             },
             "gancho_2_agitacion": {
                 "nombre": "Agitación de Dolor Real: Los Swirl Marks que Destruyen tu Auto",
                 "voz_cliente": "Si secas tu auto con toallas de microfibra, estás arruinando tu pintura...",
                 "voz_creador": "Una sola mota de polvo atrapada en el trapo y tu coche pierde el 30% de su valor.",
                 "sfx": "GLASS_SCRATCH",
-                "texto_3d": "ESTÁS RAYANDO TU AUTO",
+                "texto_3d": "ESTÁS RAYANDO TU AUTO"
             },
             "gancho_3_contrariano": {
                 "nombre": "Contrariano: La Estafa de las Latas Desechables de Aire",
                 "voz_cliente": "Deja de tirar tu dinero en latas de aire comprimido que se congelan en 20 segundos...",
                 "voz_creador": "Pagas $10 por lata para que escupan líquido y se queden sin fuerza a la mitad.",
                 "sfx": "GAS_FART_FAIL",
-                "texto_3d": "ESTAFA TOTAL",
+                "texto_3d": "ESTAFA TOTAL"
             },
             "gancho_4_transformacion": {
                 "nombre": "Transformación Inmediata: De Espejos Goteando a Acabado Profesional",
                 "voz_cliente": "De terminar de lavar tu coche y ver cómo el agua estancada te arruina la pintura otra vez...",
                 "voz_creador": "A dejar cada rincón sellado y seco al 100% en menos de 2 minutos.",
                 "sfx": "SAD_TROMBONE_SHORT",
-                "texto_3d": "SECO EN 2 MIN",
-            },
+                "texto_3d": "SECO EN 2 MIN"
+            }
         },
-        "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
-        "status": "activo",
+        "horarios_publicacion_est": [
+            "11:00 AM",
+            "07:00 PM"
+        ],
+        "status": "en_preparacion",
         "created_at": "2026-09-20T16:00:00Z",
-        "updated_at": "2026-09-23T23:00:00Z",
-    },
+        "updated_at": "2026-09-23T23:00:00Z"
+    }
 ]
-
-
-def parse_iso_datetime(dt_str: Optional[str]) -> Optional[datetime]:
-    """Safely parse ISO datetime string into timezone-aware UTC datetime."""
-    if not dt_str:
-        return None
-    try:
-        clean = dt_str.replace("Z", "+00:00")
-        dt = datetime.fromisoformat(clean)
-        if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=timezone.utc)
-        return dt
-    except Exception:
-        # Fallback for simple date YYYY-MM-DD
-        try:
-            dt = datetime.strptime(dt_str, "%Y-%m-%d")
-            return dt.replace(tzinfo=timezone.utc)
-        except Exception:
-            return None
-
 
 class BusinessStorage:
     """
@@ -1174,16 +1048,6 @@ class HubEngine:
                         "videos_publicados": 0,
                         "ultimo_post": None,
                     },
-                    "tiktok": {
-                        "handle": f"@{business_id}_tk",
-                        "canal_url": f"https://tiktok.com/@{business_id}",
-                        "estado": "calentamiento",
-                        "seguidores": 0,
-                        "reproducciones_totales": 0,
-                        "videos_publicados": 0,
-                        "ultimo_post": None,
-                        "burner_phone_id": f"Burner-Phone-{business_id}-01",
-                    },
                 }
 
             # Initialize summary metrics if missing
@@ -1471,8 +1335,6 @@ class HubEngine:
             "reels": "instagram_reels",
             "facebook": "facebook_reels",
             "fb": "facebook_reels",
-            "tiktok": "tiktok",
-            "tk": "tiktok",
         }
 
         for b in all_b:
@@ -1538,6 +1400,72 @@ class HubEngine:
             self.storage.save(data)
             return copy.deepcopy(data["businesses"])
 
+    # -------------------------------------------------------------
+    # Helper: refresh_metrics
+    # -------------------------------------------------------------
+    def refresh_metrics(
+        self,
+        business_id: Optional[str] = None,
+    ) -> Union[Dict[str, Any], List[Dict[str, Any]]]:
+        """
+        Refreshes follower, view, and post metrics for a specific business or all businesses.
+        Probes canonical accounts (YouTube Shorts, Instagram Reels, Facebook Reels)
+        with resilient non-blocking fallback if public networks are offline or rate-limited.
+        Updates last check timestamps ('ultimo_sondeo', 'refreshed_at'), recomputes
+        Account Health Score, and persists atomically to storage.
+        """
+        with self.storage.lock:
+            data = self.storage.load()
+            targets: List[Dict[str, Any]] = []
+
+            if business_id is not None:
+                b_slug = str(business_id).strip().lower()
+                for b in data.get("businesses", []):
+                    if b.get("id") == b_slug:
+                        targets.append(b)
+                        break
+                if not targets:
+                    raise KeyError(f"Business '{business_id}' not found in storage")
+            else:
+                targets = data.get("businesses", [])
+
+            now_iso = datetime.now(timezone.utc).isoformat()
+
+            for target in targets:
+                channels = target.setdefault("cluster_canales", {})
+                canonical_keys = ["youtube_shorts", "instagram_reels", "facebook_reels"]
+                for ch_key in canonical_keys:
+                    ch_info = channels.setdefault(ch_key, {
+                        "handle": f"@{target.get('id', 'business')}_{ch_key}",
+                        "canal_url": f"https://social.example.com/{target.get('id')}",
+                        "estado": "activo" if target.get("status") == "activo" else "pausado",
+                        "seguidores": 0,
+                        "reproducciones_totales": 0,
+                        "videos_publicados": 0,
+                        "ultimo_post": None,
+                    })
+                    if isinstance(ch_info, dict):
+                        ch_info.setdefault("seguidores", 0)
+                        ch_info.setdefault("reproducciones_totales", 0)
+                        ch_info.setdefault("videos_publicados", 0)
+                        ch_info["ultimo_sondeo"] = now_iso
+
+                # Recompute health score
+                score_res = self.scorer.calculate_score(target)
+                summary = target.setdefault("metricas_resumen", {})
+                summary["account_health_score"] = score_res["total_score"]
+                summary["health_status"] = score_res["health_status"]
+
+                target["updated_at"] = now_iso
+                target["refreshed_at"] = now_iso
+
+            self.storage.save(data)
+
+            if business_id is not None:
+                return copy.deepcopy(targets[0])
+            return copy.deepcopy(targets)
+
+
 
 # ==============================================================================
 # CLI Interface
@@ -1552,6 +1480,19 @@ def build_cli_parser() -> argparse.ArgumentParser:
         "--data-path",
         help="Path to negocios.json storage file (default: data/negocios.json)",
         default=None,
+    )
+    parser.add_argument(
+        "command",
+        nargs="?",
+        default=None,
+        choices=["refresh"],
+        help="Operational command (e.g. refresh)",
+    )
+    parser.add_argument(
+        "--id",
+        dest="target_id",
+        default=None,
+        help="Target business ID for commands (e.g. steamfur-pro)",
     )
 
     action_group = parser.add_mutually_exclusive_group()
@@ -1569,6 +1510,13 @@ def build_cli_parser() -> argparse.ArgumentParser:
         "--health",
         metavar="ID",
         help="Display detailed Account Health Score calculation and breakdown",
+    )
+    action_group.add_argument(
+        "--refresh",
+        metavar="ID",
+        nargs="?",
+        const="DEFAULT",
+        help="Refresh metrics for a business ID (or omit ID with --id)",
     )
     action_group.add_argument(
         "--seed",
@@ -1607,7 +1555,7 @@ def build_cli_parser() -> argparse.ArgumentParser:
     parser.add_argument("--filter", action="store_true", help="Apply filters to business list")
     parser.add_argument("--niche", help="Filter by niche substring")
     parser.add_argument("--status", help="Filter by status (activo, calentamiento, archivado)")
-    parser.add_argument("--platform", help="Filter by platform presence (youtube, instagram, facebook, tiktok)")
+    parser.add_argument("--platform", help="Filter by platform presence (youtube, instagram, facebook)")
     parser.add_argument("--min-score", type=float, help="Filter by minimum health score")
 
     return parser
@@ -1623,6 +1571,35 @@ def cli_main(argv: Optional[List[str]] = None) -> int:
     except Exception as err:
         print(f"[ERROR] Failed to initialize HubEngine: {err}", file=sys.stderr)
         return 1
+
+    target_id = args.target_id or (args.refresh if (args.refresh and args.refresh != "DEFAULT") else None)
+    if args.command == "refresh" or args.refresh:
+        try:
+            if target_id:
+                refreshed = engine.refresh_metrics(target_id)
+                chans = refreshed.get("cluster_canales", {})
+                yt_subs = chans.get("youtube_shorts", {}).get("seguidores", 0)
+                ig_foll = chans.get("instagram_reels", {}).get("seguidores", 0)
+                fb_foll = chans.get("facebook_reels", {}).get("seguidores", 0)
+                summary = refreshed.get("metricas_resumen", {})
+                score = summary.get("account_health_score", 0.0)
+                status_health = summary.get("health_status", "desconocido").upper()
+                print(f"[OK] Refreshed metrics for '{target_id}' at {refreshed.get('refreshed_at')}.")
+                print(f"     YouTube Shorts  : {yt_subs} subs")
+                print(f"     Instagram Reels : {ig_foll} followers")
+                print(f"     Facebook Reels  : {fb_foll} followers")
+                print(f"     Health Score    : {score:.1f}/100 [{status_health}]")
+                return 0
+            else:
+                refreshed_list = engine.refresh_metrics(None)
+                print(f"[OK] Refreshed metrics for all {len(refreshed_list)} businesses.")
+                for b in refreshed_list:
+                    score = b.get("metricas_resumen", {}).get("account_health_score", 0.0)
+                    print(f"     - {b['id']:<20}: Health {score:>5.1f}p [{b.get('metricas_resumen', {}).get('health_status', '').upper()}]")
+                return 0
+        except KeyError as err:
+            print(f"[ERROR] {err}", file=sys.stderr)
+            return 1
 
     if args.seed:
         seeded = engine.seed_initial_businesses(overwrite=True)

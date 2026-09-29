@@ -134,6 +134,17 @@
             <span class="hidden lg:inline">Restablecer</span>
           </button>
 
+          <!-- Refresh Metrics Button -->
+          <button id="btn-refresh-metrics" title="Sincronizar Métricas en Tiempo Real (Centinela)" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-emerald-300 hover:text-white bg-emerald-950/40 hover:bg-emerald-900/60 border border-emerald-500/30 hover:border-emerald-400/60 transition-all duration-150 shadow-sm shadow-emerald-950/50">
+            <svg id="icon-refresh" class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 2v6h-6"/>
+              <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/>
+              <path d="M3 22v-6h6"/>
+              <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+            </svg>
+            <span class="hidden sm:inline">Sincronizar Métricas</span>
+          </button>
+
           <!-- Export JSON Button -->
           <button id="btn-export-json" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-cyan-300 hover:text-white bg-cyan-950/40 hover:bg-cyan-900/60 border border-cyan-500/30 hover:border-cyan-400/60 transition-all duration-150 shadow-sm shadow-cyan-950/50">
             <svg class="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -177,10 +188,10 @@
             </div>
           </div>
           <div>
-            <div id="kpi-negocios-activos" class="text-2xl font-extrabold text-white tracking-tight">4 / 4</div>
+            <div id="kpi-negocios-activos" class="text-2xl font-extrabold text-white tracking-tight">1 / 4</div>
             <div class="mt-1 flex items-center text-[11px] text-emerald-400 font-medium">
               <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span>
-              <span id="kpi-negocios-pct">100% Operativos</span>
+              <span id="kpi-negocios-pct">25% Operativo</span>
             </div>
           </div>
         </div>
@@ -197,9 +208,9 @@
             </div>
           </div>
           <div>
-            <div id="kpi-canales-totales" class="text-2xl font-extrabold text-white tracking-tight">16 Canales</div>
+            <div id="kpi-canales-totales" class="text-2xl font-extrabold text-white tracking-tight">3 / 12 Canales</div>
             <div class="mt-1 text-[11px] text-gray-400 font-medium truncate" id="kpi-canales-breakdown">
-              4 YT · 4 IG · 4 FB · 4 TK
+              4 YT · 4 IG · 4 FB (Triángulo Orgánico)
             </div>
           </div>
         </div>
@@ -215,7 +226,7 @@
             </div>
           </div>
           <div>
-            <div id="kpi-videos-hoy" class="text-2xl font-extrabold text-white tracking-tight">8 / 8 Videos</div>
+            <div id="kpi-videos-hoy" class="text-2xl font-extrabold text-white tracking-tight">0 / 2 Videos</div>
             <div class="mt-1 flex items-center text-[11px] text-indigo-300 font-medium">
               <span class="inline-block w-1.5 h-1.5 rounded-full bg-indigo-400 mr-1.5"></span>
               <span>11:00 AM & 7:00 PM EST</span>
@@ -234,7 +245,7 @@
             </div>
           </div>
           <div>
-            <div id="kpi-trafico-estimado" class="text-2xl font-extrabold text-white tracking-tight">55,800</div>
+            <div id="kpi-trafico-estimado" class="text-2xl font-extrabold text-white tracking-tight">0</div>
             <div class="mt-1 flex items-center text-[11px] text-blue-400 font-medium">
               <svg class="w-3 h-3 mr-0.5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
               <span>+28.4% vs promedio</span>
@@ -253,7 +264,7 @@
             </div>
           </div>
           <div>
-            <div id="kpi-clics-tienda" class="text-2xl font-extrabold text-white tracking-tight">325 Clics</div>
+            <div id="kpi-clics-tienda" class="text-2xl font-extrabold text-white tracking-tight">0 Clics</div>
             <div class="mt-1 flex items-center text-[11px] text-amber-400 font-medium">
               <span>2.45% CTR Bio · Margen 72%+</span>
             </div>
@@ -302,6 +313,7 @@
             <select id="filter-estado" class="w-full sm:w-36 py-2.5 px-3 bg-hubDarker border border-hubBorder rounded-xl text-xs text-gray-200 focus:outline-none focus:border-cyan-500/70 cursor-pointer">
               <option value="all">Todos los Estados</option>
               <option value="activo">Activo</option>
+              <option value="en_preparacion">En Preparación</option>
               <option value="pausado">Pausado</option>
             </select>
           </div>
@@ -313,7 +325,6 @@
               <option value="youtube_shorts">YouTube Shorts</option>
               <option value="instagram_reels">Instagram Reels</option>
               <option value="facebook_reels">Facebook Reels</option>
-              <option value="tiktok">TikTok USA</option>
             </select>
           </div>
 
@@ -691,13 +702,9 @@
               <label class="block text-xs font-medium text-gray-300 mb-1" for="new-ig">Instagram Reels (@handle)</label>
               <input type="text" id="new-ig" placeholder="@aquaglow_us" class="w-full px-3.5 py-2.5 bg-hubDarker border border-hubBorder rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-all">
             </div>
-            <div>
+            <div class="sm:col-span-2">
               <label class="block text-xs font-medium text-gray-300 mb-1" for="new-fb">Facebook Reels (Nombre Página)</label>
               <input type="text" id="new-fb" placeholder="AquaGlow Skincare" class="w-full px-3.5 py-2.5 bg-hubDarker border border-hubBorder rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-all">
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-gray-300 mb-1" for="new-tk">TikTok USA (@handle)</label>
-              <input type="text" id="new-tk" placeholder="@aquaglow_usa" class="w-full px-3.5 py-2.5 bg-hubDarker border border-hubBorder rounded-xl text-xs text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-all">
             </div>
           </div>
         </div>
@@ -769,38 +776,28 @@
           "handle": "@SteamFurPro",
           "canal_url": "https://www.youtube.com/channel/UCpJo7z99cTA1DFC36nK0Zng",
           "estado": "activo",
-          "seguidores": 4250,
-          "reproducciones_totales": 128400,
-          "videos_publicados": 18,
-          "ultimo_post": "2026-09-23T15:00:00Z"
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "instagram_reels": {
           "handle": "@steamfurpro",
           "canal_url": "https://www.instagram.com/steamfurpro",
           "estado": "activo",
-          "seguidores": 3890,
-          "reproducciones_totales": 96200,
-          "videos_publicados": 18,
-          "ultimo_post": "2026-09-23T23:00:00Z"
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "facebook_reels": {
           "handle": "SteamFur Pro Official",
           "canal_url": "https://www.facebook.com/profile.php?id=61594892791830",
           "estado": "activo",
-          "seguidores": 1920,
-          "reproducciones_totales": 45100,
-          "videos_publicados": 14,
-          "ultimo_post": "2026-09-23T23:00:00Z"
-        },
-        "tiktok": {
-          "handle": "@trysteamfur_usa",
-          "canal_url": "https://tiktok.com/@trysteamfur_usa",
-          "estado": "calentamiento",
-          "seguidores": 310,
-          "reproducciones_totales": 3200,
+          "seguidores": 0,
+          "reproducciones_totales": 0,
           "videos_publicados": 0,
-          "ultimo_post": null,
-          "burner_phone_id": "Burner-Phone-Pixel4a-SIM-MintUS-01"
+          "ultimo_post": null
         }
       },
       "credenciales_aisladas": {
@@ -816,44 +813,16 @@
         }
       },
       "metricas_resumen": {
-        "videos_hoy": 2,
-        "vistas_hoy": 14200,
-        "clics_tienda_hoy": 84,
-        "vistas_ultimos_7_dias": 89400,
-        "tasa_conversion_bio_pct": 1.25,
+        "videos_hoy": 0,
+        "vistas_hoy": 0,
+        "clics_tienda_hoy": 0,
+        "vistas_ultimos_7_dias": 0,
+        "tasa_conversion_bio_pct": 0.0,
         "dias_sin_publicar": 0,
-        "account_health_score": 96.5,
+        "account_health_score": 95.0,
         "health_status": "optimo"
       },
-      "historial_metricas": [
-        {
-          "fecha": "2026-09-21",
-          "videos_publicados": 2,
-          "vistas": 12800,
-          "likes": 980,
-          "clics_checkout": 68,
-          "pedidos": 5,
-          "health_score": 94.0
-        },
-        {
-          "fecha": "2026-09-22",
-          "videos_publicados": 2,
-          "vistas": 13900,
-          "likes": 1120,
-          "clics_checkout": 79,
-          "pedidos": 7,
-          "health_score": 95.8
-        },
-        {
-          "fecha": "2026-09-23",
-          "videos_publicados": 2,
-          "vistas": 14200,
-          "likes": 1150,
-          "clics_checkout": 84,
-          "pedidos": 6,
-          "health_score": 96.5
-        }
-      ],
+      "historial_metricas": [],
       "ganchos_conversion": {
         "gancho_1_curiosidad": {
           "nombre": "Curiosidad Disruptiva: La Manta de Pelo Extraída en 3 Segundos",
@@ -923,39 +892,29 @@
         "youtube_shorts": {
           "handle": "@ProSmileDental",
           "canal_url": "https://youtube.com/@ProSmileDental",
-          "estado": "activo",
-          "seguidores": 5120,
-          "reproducciones_totales": 142300,
-          "videos_publicados": 20,
-          "ultimo_post": "2026-09-23T15:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "instagram_reels": {
           "handle": "@prosmile_smile",
           "canal_url": "https://instagram.com/prosmile_smile",
-          "estado": "activo",
-          "seguidores": 4430,
-          "reproducciones_totales": 118700,
-          "videos_publicados": 20,
-          "ultimo_post": "2026-09-23T23:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "facebook_reels": {
           "handle": "ProSmile Oral Care",
           "canal_url": "https://facebook.com/prosmile_oralcare",
-          "estado": "activo",
-          "seguidores": 2410,
-          "reproducciones_totales": 52800,
-          "videos_publicados": 16,
-          "ultimo_post": "2026-09-23T23:00:00Z"
-        },
-        "tiktok": {
-          "handle": "@getprosmile_usa",
-          "canal_url": "https://tiktok.com/@getprosmile_usa",
-          "estado": "calentamiento",
-          "seguidores": 420,
-          "reproducciones_totales": 4800,
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
           "videos_publicados": 0,
-          "ultimo_post": null,
-          "burner_phone_id": "Burner-Phone-Pixel5-SIM-UltraMobileUS-02"
+          "ultimo_post": null
         }
       },
       "credenciales_aisladas": {
@@ -971,44 +930,16 @@
         }
       },
       "metricas_resumen": {
-        "videos_hoy": 2,
-        "vistas_hoy": 16800,
-        "clics_tienda_hoy": 98,
-        "vistas_ultimos_7_dias": 104500,
-        "tasa_conversion_bio_pct": 1.38,
+        "videos_hoy": 0,
+        "vistas_hoy": 0,
+        "clics_tienda_hoy": 0,
+        "vistas_ultimos_7_dias": 0,
+        "tasa_conversion_bio_pct": 0.0,
         "dias_sin_publicar": 0,
-        "account_health_score": 97.2,
-        "health_status": "optimo"
+        "account_health_score": 75.0,
+        "health_status": "en_espera"
       },
-      "historial_metricas": [
-        {
-          "fecha": "2026-09-21",
-          "videos_publicados": 2,
-          "vistas": 14900,
-          "likes": 1150,
-          "clics_checkout": 82,
-          "pedidos": 7,
-          "health_score": 95.0
-        },
-        {
-          "fecha": "2026-09-22",
-          "videos_publicados": 2,
-          "vistas": 15800,
-          "likes": 1280,
-          "clics_checkout": 91,
-          "pedidos": 8,
-          "health_score": 96.4
-        },
-        {
-          "fecha": "2026-09-23",
-          "videos_publicados": 2,
-          "vistas": 16800,
-          "likes": 1390,
-          "clics_checkout": 98,
-          "pedidos": 9,
-          "health_score": 97.2
-        }
-      ],
+      "historial_metricas": [],
       "ganchos_conversion": {
         "gancho_1_curiosidad": {
           "nombre": "Curiosidad Disruptiva: El Metal que No Rompe Huevos",
@@ -1043,7 +974,7 @@
         "11:00 AM",
         "07:00 PM"
       ],
-      "status": "activo",
+      "status": "en_preparacion",
       "created_at": "2026-09-19T10:00:00Z",
       "updated_at": "2026-09-23T23:00:00Z"
     },
@@ -1078,39 +1009,29 @@
         "youtube_shorts": {
           "handle": "@SpineReliefTech",
           "canal_url": "https://youtube.com/@SpineReliefTech",
-          "estado": "activo",
-          "seguidores": 3480,
-          "reproducciones_totales": 89500,
-          "videos_publicados": 16,
-          "ultimo_post": "2026-09-23T15:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "instagram_reels": {
           "handle": "@spinerelief_us",
           "canal_url": "https://instagram.com/spinerelief_us",
-          "estado": "activo",
-          "seguidores": 3120,
-          "reproducciones_totales": 72400,
-          "videos_publicados": 16,
-          "ultimo_post": "2026-09-23T23:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "facebook_reels": {
           "handle": "SpineRelief Official",
           "canal_url": "https://facebook.com/spinerelief_official",
-          "estado": "activo",
-          "seguidores": 1840,
-          "reproducciones_totales": 38600,
-          "videos_publicados": 12,
-          "ultimo_post": "2026-09-23T23:00:00Z"
-        },
-        "tiktok": {
-          "handle": "@spinerelief_usa",
-          "canal_url": "https://tiktok.com/@spinerelief_usa",
-          "estado": "calentamiento",
-          "seguidores": 280,
-          "reproducciones_totales": 2900,
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
           "videos_publicados": 0,
-          "ultimo_post": null,
-          "burner_phone_id": "Burner-Phone-GalaxyS10-SIM-MintUS-03"
+          "ultimo_post": null
         }
       },
       "credenciales_aisladas": {
@@ -1126,44 +1047,16 @@
         }
       },
       "metricas_resumen": {
-        "videos_hoy": 2,
-        "vistas_hoy": 11300,
-        "clics_tienda_hoy": 65,
-        "vistas_ultimos_7_dias": 68900,
-        "tasa_conversion_bio_pct": 1.18,
+        "videos_hoy": 0,
+        "vistas_hoy": 0,
+        "clics_tienda_hoy": 0,
+        "vistas_ultimos_7_dias": 0,
+        "tasa_conversion_bio_pct": 0.0,
         "dias_sin_publicar": 0,
-        "account_health_score": 95.1,
-        "health_status": "optimo"
+        "account_health_score": 75.0,
+        "health_status": "en_espera"
       },
-      "historial_metricas": [
-        {
-          "fecha": "2026-09-21",
-          "videos_publicados": 2,
-          "vistas": 10200,
-          "likes": 780,
-          "clics_checkout": 54,
-          "pedidos": 4,
-          "health_score": 93.5
-        },
-        {
-          "fecha": "2026-09-22",
-          "videos_publicados": 2,
-          "vistas": 10800,
-          "likes": 840,
-          "clics_checkout": 59,
-          "pedidos": 5,
-          "health_score": 94.2
-        },
-        {
-          "fecha": "2026-09-23",
-          "videos_publicados": 2,
-          "vistas": 11300,
-          "likes": 910,
-          "clics_checkout": 65,
-          "pedidos": 6,
-          "health_score": 95.1
-        }
-      ],
+      "historial_metricas": [],
       "ganchos_conversion": {
         "gancho_1_curiosidad": {
           "nombre": "Curiosidad Disruptiva: El Secreto Médico Prohibido",
@@ -1198,7 +1091,7 @@
         "11:00 AM",
         "07:00 PM"
       ],
-      "status": "activo",
+      "status": "en_preparacion",
       "created_at": "2026-09-20T14:00:00Z",
       "updated_at": "2026-09-23T23:00:00Z"
     },
@@ -1233,39 +1126,29 @@
         "youtube_shorts": {
           "handle": "@AeroForceTurbine",
           "canal_url": "https://youtube.com/@AeroForceTurbine",
-          "estado": "activo",
-          "seguidores": 3950,
-          "reproducciones_totales": 112000,
-          "videos_publicados": 18,
-          "ultimo_post": "2026-09-23T15:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "instagram_reels": {
           "handle": "@aeroforce_x3",
           "canal_url": "https://instagram.com/aeroforce_x3",
-          "estado": "activo",
-          "seguidores": 3610,
-          "reproducciones_totales": 88400,
-          "videos_publicados": 18,
-          "ultimo_post": "2026-09-23T23:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "facebook_reels": {
           "handle": "AeroForce Jet Fan",
           "canal_url": "https://facebook.com/aeroforce_fan",
-          "estado": "activo",
-          "seguidores": 1750,
-          "reproducciones_totales": 41200,
-          "videos_publicados": 14,
-          "ultimo_post": "2026-09-23T23:00:00Z"
-        },
-        "tiktok": {
-          "handle": "@aeroforce_usa",
-          "canal_url": "https://tiktok.com/@aeroforce_usa",
-          "estado": "calentamiento",
-          "seguidores": 295,
-          "reproducciones_totales": 3100,
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
           "videos_publicados": 0,
-          "ultimo_post": null,
-          "burner_phone_id": "Burner-Phone-Pixel4-SIM-TelloUS-04"
+          "ultimo_post": null
         }
       },
       "credenciales_aisladas": {
@@ -1281,44 +1164,16 @@
         }
       },
       "metricas_resumen": {
-        "videos_hoy": 2,
-        "vistas_hoy": 13500,
-        "clics_tienda_hoy": 78,
-        "vistas_ultimos_7_dias": 81200,
-        "tasa_conversion_bio_pct": 1.22,
+        "videos_hoy": 0,
+        "vistas_hoy": 0,
+        "clics_tienda_hoy": 0,
+        "vistas_ultimos_7_dias": 0,
+        "tasa_conversion_bio_pct": 0.0,
         "dias_sin_publicar": 0,
-        "account_health_score": 96.0,
-        "health_status": "optimo"
+        "account_health_score": 75.0,
+        "health_status": "en_espera"
       },
-      "historial_metricas": [
-        {
-          "fecha": "2026-09-21",
-          "videos_publicados": 2,
-          "vistas": 11900,
-          "likes": 890,
-          "clics_checkout": 62,
-          "pedidos": 5,
-          "health_score": 93.8
-        },
-        {
-          "fecha": "2026-09-22",
-          "videos_publicados": 2,
-          "vistas": 12700,
-          "likes": 980,
-          "clics_checkout": 71,
-          "pedidos": 6,
-          "health_score": 95.0
-        },
-        {
-          "fecha": "2026-09-23",
-          "videos_publicados": 2,
-          "vistas": 13500,
-          "likes": 1050,
-          "clics_checkout": 78,
-          "pedidos": 7,
-          "health_score": 96.0
-        }
-      ],
+      "historial_metricas": [],
       "ganchos_conversion": {
         "gancho_1_curiosidad": {
           "nombre": "Curiosidad Disruptiva: Un Motor de Caza en el Bolsillo",
@@ -1353,7 +1208,7 @@
         "11:00 AM",
         "07:00 PM"
       ],
-      "status": "activo",
+      "status": "en_preparacion",
       "created_at": "2026-09-20T16:00:00Z",
       "updated_at": "2026-09-23T23:00:00Z"
     }
@@ -1408,7 +1263,7 @@
     // ==========================================
     async function initApp() {
       let loaded = false;
-      const STORAGE_KEY = 'antigravity_hub_businesses_v1_1';
+      const STORAGE_KEY = 'antigravity_hub_businesses_v2_0';
       const local = localStorage.getItem(STORAGE_KEY);
       if (local) {
         try {
@@ -1452,7 +1307,7 @@
 
     function saveToStorage() {
       try {
-        localStorage.setItem('antigravity_hub_businesses_v1_1', JSON.stringify(state.businesses));
+        localStorage.setItem('antigravity_hub_businesses_v2_0', JSON.stringify(state.businesses));
       } catch (err) {
         console.error('LocalStorage write failed', err);
       }
@@ -1481,12 +1336,6 @@
           name: 'Facebook Reels',
           icon: 'fb',
           data: c.facebook_reels || c.facebook || { handle: 'Página Facebook', canal_url: '#', estado: 'pausado', seguidores: 0, reproducciones_totales: 0, videos_publicados: 0 }
-        },
-        {
-          key: 'tiktok',
-          name: 'TikTok USA',
-          icon: 'tk',
-          data: c.tiktok || { handle: '@tiktok', canal_url: '#', estado: 'calentamiento', seguidores: 0, reproducciones_totales: 0, videos_publicados: 0, burner_phone_id: 'Burner-Phone' }
         }
       ];
     }
@@ -1531,6 +1380,7 @@
       const pctActivos = total > 0 ? Math.round((activos / total) * 100) : 0;
       
       let totalCanales = 0;
+      let canalesActivos = 0;
       let totalVideosHoy = 0;
       let totalVistasHoy = 0;
       let totalClicsHoy = 0;
@@ -1538,25 +1388,22 @@
       state.businesses.forEach(b => {
         const channels = getNormalizedChannels(b);
         totalCanales += channels.length;
+        channels.forEach(ch => {
+          if (ch.data && ch.data.estado === 'activo') canalesActivos++;
+        });
         
         if (b.metricas_resumen) {
-          totalVideosHoy += (b.metricas_resumen.videos_hoy || 2);
+          totalVideosHoy += (b.metricas_resumen.videos_hoy || 0);
           totalVistasHoy += (b.metricas_resumen.vistas_hoy || 0);
           totalClicsHoy += (b.metricas_resumen.clics_tienda_hoy || 0);
-        } else {
-          totalVideosHoy += 2;
         }
       });
 
-      // Defaults if zero
-      if (totalVistasHoy === 0 && total > 0) totalVistasHoy = 55800;
-      if (totalClicsHoy === 0 && total > 0) totalClicsHoy = 325;
-
       document.getElementById('kpi-negocios-activos').textContent = `${activos} / ${total}`;
-      document.getElementById('kpi-negocios-pct').textContent = `${pctActivos}% Operativos`;
-      document.getElementById('kpi-canales-totales').textContent = `${totalCanales} Canales`;
-      document.getElementById('kpi-canales-breakdown').textContent = `${total} YT · ${total} IG · ${total} FB · ${total} TK`;
-      document.getElementById('kpi-videos-hoy').textContent = `${totalVideosHoy} / ${total * 2} Videos`;
+      document.getElementById('kpi-negocios-pct').textContent = `${pctActivos}% Operativo`;
+      document.getElementById('kpi-canales-totales').textContent = `${canalesActivos} / ${totalCanales} Canales`;
+      document.getElementById('kpi-canales-breakdown').textContent = `${total} YT · ${total} IG · ${total} FB (Triángulo Orgánico)`;
+      document.getElementById('kpi-videos-hoy').textContent = `${totalVideosHoy} / ${activos * 2} Videos`;
       document.getElementById('kpi-trafico-estimado').textContent = totalVistasHoy.toLocaleString();
       document.getElementById('kpi-clics-tienda').textContent = `${totalClicsHoy.toLocaleString()} Clics`;
     }
@@ -1618,7 +1465,7 @@
         return true;
       });
 
-      countEl.textContent = `Mostrando ${filtered.length} de ${state.businesses.length} negocios (${filtered.length * 4} canales)`;
+      countEl.textContent = `Mostrando ${filtered.length} de ${state.businesses.length} negocios (${filtered.length * 3} canales)`;
 
       if (filtered.length === 0) {
         grid.innerHTML = '';
@@ -1667,9 +1514,9 @@
               </div>
 
               <!-- General Status Semaphore -->
-              <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${isActivo ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-gray-500/10 text-gray-400 border border-gray-500/30'} shrink-0">
-                <span class="w-1.5 h-1.5 rounded-full ${isActivo ? 'bg-emerald-400 pulse-dot-green' : 'bg-gray-400'} mr-1.5"></span>
-                ${isActivo ? 'Activo' : 'Pausado'}
+              <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${isActivo ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : (b.status === 'en_preparacion' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30' : 'bg-gray-500/10 text-gray-400 border border-gray-500/30')} shrink-0">
+                <span class="w-1.5 h-1.5 rounded-full ${isActivo ? 'bg-emerald-400 pulse-dot-green' : (b.status === 'en_preparacion' ? 'bg-amber-400' : 'bg-gray-400')} mr-1.5"></span>
+                ${isActivo ? 'Activo' : (b.status === 'en_preparacion' ? 'En Preparación' : 'Pausado')}
               </span>
             </div>
 
@@ -1751,7 +1598,7 @@
       } else if (ch.key === 'facebook_reels') {
         platformIcon = `<svg class="w-3.5 h-3.5 text-blue-500 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`;
       } else {
-        platformIcon = `<svg class="w-3.5 h-3.5 text-cyan-400 fill-current" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>`;
+        platformIcon = `<svg class="w-3.5 h-3.5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`;
       }
 
       return `
@@ -1773,7 +1620,7 @@
               ${ch.data.handle || '@canal'}
             </span>
             <span class="text-[10px] text-gray-500">
-              ${ch.data.seguidores ? Number(ch.data.seguidores).toLocaleString() + ' seg' : (ch.data.reproducciones_totales ? Number(ch.data.reproducciones_totales).toLocaleString() + ' v' : 'Warm-up')}
+              ${(ch.data.seguidores !== undefined && ch.data.seguidores !== null) ? Number(ch.data.seguidores).toLocaleString() + ' seg' : '0 seg'}
             </span>
           </div>
         </div>
@@ -1919,7 +1766,7 @@
 
               <div class="space-y-1 text-xs">
                 <div class="text-gray-400 font-mono text-[11px] truncate">Handle: <span class="text-gray-200">${ch.data.handle || '@canal'}</span></div>
-                <div class="text-gray-400 text-[11px]">Seguidores: <span class="text-white font-semibold">${ch.data.seguidores ? Number(ch.data.seguidores).toLocaleString() : 'En crecimiento'}</span> · Vistas: <span class="text-cyan-300 font-semibold">${ch.data.reproducciones_totales ? Number(ch.data.reproducciones_totales).toLocaleString() : '0'}</span></div>
+                <div class="text-gray-400 text-[11px]">Seguidores: <span class="text-white font-semibold">${(ch.data.seguidores !== undefined && ch.data.seguidores !== null) ? Number(ch.data.seguidores).toLocaleString() : '0'}</span> · Vistas: <span class="text-cyan-300 font-semibold">${ch.data.reproducciones_totales ? Number(ch.data.reproducciones_totales).toLocaleString() : '0'}</span></div>
               </div>
             </div>
 
@@ -1984,13 +1831,7 @@
             `}
           </div>
         </div>
-      `).join('') + `
-        <!-- TikTok Manual Upload Disclaimer -->
-        <div class="p-3.5 rounded-xl bg-amber-950/20 border border-amber-500/20 text-xs text-amber-300/80 flex items-center gap-2.5">
-          <span class="text-lg">📲</span>
-          <span><strong>Despacho TikTok USA:</strong> Se ejecuta manualmente desde el Burner Phone físico con SIM Mint USA para evitar el shadowban algorítmico de APIs no oficiales.</span>
-        </div>
-      `;
+      `).join('');
     }
 
     function renderModalTabGanchos(b) {
@@ -2133,7 +1974,6 @@
       const ytHandle = document.getElementById('new-yt').value.trim() || `@${nombre.replace(/\s+/g, '')}Official`;
       const igHandle = document.getElementById('new-ig').value.trim() || `@${nombre.toLowerCase().replace(/[^a-z0-9]/g, '')}_us`;
       const fbHandle = document.getElementById('new-fb').value.trim() || `${nombre} Official`;
-      const tkHandle = document.getElementById('new-tk').value.trim() || `@${nombre.toLowerCase().replace(/[^a-z0-9]/g, '')}_usa`;
 
       if (!nombre || !nicho || !producto || srp <= 0 || !email || !tiendaUrl) {
         errorDiv.textContent = 'Por favor completa todos los campos requeridos con datos válidos.';
@@ -2177,8 +2017,8 @@
             handle: ytHandle,
             canal_url: `https://youtube.com/${ytHandle}`,
             estado: "calentamiento",
-            seguidores: 50,
-            reproducciones_totales: 500,
+            seguidores: 0,
+            reproducciones_totales: 0,
             videos_publicados: 0,
             ultimo_post: null
           },
@@ -2186,8 +2026,8 @@
             handle: igHandle,
             canal_url: `https://instagram.com/${igHandle.replace('@', '')}`,
             estado: "calentamiento",
-            seguidores: 80,
-            reproducciones_totales: 800,
+            seguidores: 0,
+            reproducciones_totales: 0,
             videos_publicados: 0,
             ultimo_post: null
           },
@@ -2195,20 +2035,10 @@
             handle: fbHandle,
             canal_url: `https://facebook.com/${slugId}`,
             estado: "calentamiento",
-            seguidores: 30,
-            reproducciones_totales: 200,
+            seguidores: 0,
+            reproducciones_totales: 0,
             videos_publicados: 0,
             ultimo_post: null
-          },
-          tiktok: {
-            handle: tkHandle,
-            canal_url: `https://tiktok.com/${tkHandle}`,
-            estado: "calentamiento",
-            seguidores: 120,
-            reproducciones_totales: 1500,
-            videos_publicados: 0,
-            ultimo_post: null,
-            burner_phone_id: "Burner-Phone-Pixel4-SIM-Dedicated"
           }
         },
         credenciales_aisladas: {
@@ -2506,6 +2336,37 @@
       });
 
       // Navbar Actions
+      const refreshBtn = document.getElementById('btn-refresh-metrics');
+      if (refreshBtn) {
+        refreshBtn.addEventListener('click', async () => {
+          const icon = document.getElementById('icon-refresh');
+          if (icon) icon.classList.add('animate-spin');
+          try {
+            const res = await fetch('data/negocios.json?t=' + Date.now());
+            if (res.ok) {
+              const json = await res.json();
+              if (json && Array.isArray(json.businesses)) {
+                state.businesses = json.businesses;
+                saveToStorage();
+                populateNicheFilter();
+                renderAll();
+                showToast('Métricas vivas sincronizadas con éxito.', 'success');
+              } else {
+                showToast('Respuesta no válida del archivo de métricas.', 'warning');
+              }
+            } else {
+              showToast('Modo local: datos sincronizados desde memoria interna.', 'info');
+            }
+          } catch (err) {
+            console.warn('Refresh fetch restricted or offline:', err);
+            showToast('Modo local: datos sincronizados desde memoria interna.', 'info');
+          } finally {
+            if (icon) {
+              setTimeout(() => icon.classList.remove('animate-spin'), 400);
+            }
+          }
+        });
+      }
       document.getElementById('btn-export-json').addEventListener('click', exportJsonFile);
       document.getElementById('btn-reset-seed').addEventListener('click', resetSeedData);
 

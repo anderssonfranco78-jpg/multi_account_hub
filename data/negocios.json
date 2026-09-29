@@ -12,16 +12,21 @@
         "categoria": "Pet Supplies & Home Care",
         "descripcion": "Conical silicone pet brush with integrated cold ion ultrasonic mist that neutralizes static and allows peeling off shed pet hair in a single solid sheet in 2 seconds.",
         "precio_sugerido_usd": 29.99,
-        "costo_proveedor_usd": 1.00,
-        "costo_envio_usd": 2.50,
-        "costo_puesto_usd": 3.50,
+        "costo_proveedor_usd": 1.0,
+        "costo_envio_usd": 2.5,
+        "costo_puesto_usd": 3.5,
         "beneficio_neto_usd": 25.02,
         "margen_neto_pct": 83.43,
         "markup_multiplier": 8.57,
         "proveedor_url": "https://www.aliexpress.com/w/wholesale-steamy-cat-brush.html",
         "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=steamy%20pet%20brush",
         "linea_logistica": "YunExpress Ordinary / CJPacket Fast Line (7 - 10 días laborables)",
-        "paises_objetivo": ["US", "CA", "UK", "AU"]
+        "paises_objetivo": [
+          "US",
+          "CA",
+          "UK",
+          "AU"
+        ]
       },
       "score_hunter": 100.0,
       "enlace_tienda": "https://trysteamfur.com/products/pet-brush",
@@ -30,38 +35,28 @@
           "handle": "@SteamFurPro",
           "canal_url": "https://www.youtube.com/channel/UCpJo7z99cTA1DFC36nK0Zng",
           "estado": "activo",
-          "seguidores": 4250,
-          "reproducciones_totales": 128400,
-          "videos_publicados": 18,
-          "ultimo_post": "2026-09-23T15:00:00Z"
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "instagram_reels": {
           "handle": "@steamfurpro",
           "canal_url": "https://www.instagram.com/steamfurpro",
           "estado": "activo",
-          "seguidores": 3890,
-          "reproducciones_totales": 96200,
-          "videos_publicados": 18,
-          "ultimo_post": "2026-09-23T23:00:00Z"
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "facebook_reels": {
           "handle": "SteamFur Pro Official",
           "canal_url": "https://www.facebook.com/profile.php?id=61594892791830",
           "estado": "activo",
-          "seguidores": 1920,
-          "reproducciones_totales": 45100,
-          "videos_publicados": 14,
-          "ultimo_post": "2026-09-23T23:00:00Z"
-        },
-        "tiktok": {
-          "handle": "@trysteamfur_usa",
-          "canal_url": "https://tiktok.com/@trysteamfur_usa",
-          "estado": "calentamiento",
-          "seguidores": 310,
-          "reproducciones_totales": 3200,
+          "seguidores": 0,
+          "reproducciones_totales": 0,
           "videos_publicados": 0,
-          "ultimo_post": null,
-          "burner_phone_id": "Burner-Phone-Pixel4a-SIM-MintUS-01"
+          "ultimo_post": null
         }
       },
       "credenciales_aisladas": {
@@ -77,44 +72,16 @@
         }
       },
       "metricas_resumen": {
-        "videos_hoy": 2,
-        "vistas_hoy": 14200,
-        "clics_tienda_hoy": 84,
-        "vistas_ultimos_7_dias": 89400,
-        "tasa_conversion_bio_pct": 1.25,
+        "videos_hoy": 0,
+        "vistas_hoy": 0,
+        "clics_tienda_hoy": 0,
+        "vistas_ultimos_7_dias": 0,
+        "tasa_conversion_bio_pct": 0.0,
         "dias_sin_publicar": 0,
-        "account_health_score": 96.5,
+        "account_health_score": 95.0,
         "health_status": "optimo"
       },
-      "historial_metricas": [
-        {
-          "fecha": "2026-09-21",
-          "videos_publicados": 2,
-          "vistas": 12800,
-          "likes": 980,
-          "clics_checkout": 68,
-          "pedidos": 5,
-          "health_score": 94.0
-        },
-        {
-          "fecha": "2026-09-22",
-          "videos_publicados": 2,
-          "vistas": 13900,
-          "likes": 1120,
-          "clics_checkout": 79,
-          "pedidos": 7,
-          "health_score": 95.8
-        },
-        {
-          "fecha": "2026-09-23",
-          "videos_publicados": 2,
-          "vistas": 14200,
-          "likes": 1150,
-          "clics_checkout": 84,
-          "pedidos": 6,
-          "health_score": 96.5
-        }
-      ],
+      "historial_metricas": [],
       "ganchos_conversion": {
         "gancho_1_curiosidad": {
           "nombre": "Curiosidad Disruptiva: La Manta de Pelo Extraída en 3 Segundos",
@@ -145,7 +112,10 @@
           "texto_3d": "SPA EN CASA"
         }
       },
-      "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
+      "horarios_publicacion_est": [
+        "11:00 AM",
+        "07:00 PM"
+      ],
       "status": "activo",
       "created_at": "2026-09-20T12:00:00Z",
       "updated_at": "2026-09-23T23:00:00Z"
@@ -159,16 +129,21 @@
         "categoria": "Dental Health & Personal Care",
         "descripcion": "Home dental hygiene scaler with 40 kHz acoustic micro-vibrations and bioelectric sensor that shatters solid calculus instantly while stopping automatically on gums.",
         "precio_sugerido_usd": 34.99,
-        "costo_proveedor_usd": 4.50,
-        "costo_envio_usd": 3.70,
-        "costo_puesto_usd": 8.20,
+        "costo_proveedor_usd": 4.5,
+        "costo_envio_usd": 3.7,
+        "costo_puesto_usd": 8.2,
         "beneficio_neto_usd": 25.13,
         "margen_neto_pct": 71.82,
         "markup_multiplier": 4.27,
         "proveedor_url": "https://www.aliexpress.com/w/wholesale-ultrasonic-dental-calculus-remover.html",
         "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=ultrasonic%20tooth%20cleaner",
         "linea_logistica": "CJPacket Fast Line / YunExpress Ordinary (7 - 10 días laborables)",
-        "paises_objetivo": ["US", "UK", "DE", "AU"]
+        "paises_objetivo": [
+          "US",
+          "UK",
+          "DE",
+          "AU"
+        ]
       },
       "score_hunter": 100.0,
       "enlace_tienda": "https://getprosmile.com/products/ultrasonic-scaler",
@@ -176,39 +151,29 @@
         "youtube_shorts": {
           "handle": "@ProSmileDental",
           "canal_url": "https://youtube.com/@ProSmileDental",
-          "estado": "activo",
-          "seguidores": 5120,
-          "reproducciones_totales": 142300,
-          "videos_publicados": 20,
-          "ultimo_post": "2026-09-23T15:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "instagram_reels": {
           "handle": "@prosmile_smile",
           "canal_url": "https://instagram.com/prosmile_smile",
-          "estado": "activo",
-          "seguidores": 4430,
-          "reproducciones_totales": 118700,
-          "videos_publicados": 20,
-          "ultimo_post": "2026-09-23T23:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "facebook_reels": {
           "handle": "ProSmile Oral Care",
           "canal_url": "https://facebook.com/prosmile_oralcare",
-          "estado": "activo",
-          "seguidores": 2410,
-          "reproducciones_totales": 52800,
-          "videos_publicados": 16,
-          "ultimo_post": "2026-09-23T23:00:00Z"
-        },
-        "tiktok": {
-          "handle": "@getprosmile_usa",
-          "canal_url": "https://tiktok.com/@getprosmile_usa",
-          "estado": "calentamiento",
-          "seguidores": 420,
-          "reproducciones_totales": 4800,
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
           "videos_publicados": 0,
-          "ultimo_post": null,
-          "burner_phone_id": "Burner-Phone-Pixel5-SIM-UltraMobileUS-02"
+          "ultimo_post": null
         }
       },
       "credenciales_aisladas": {
@@ -224,44 +189,16 @@
         }
       },
       "metricas_resumen": {
-        "videos_hoy": 2,
-        "vistas_hoy": 16800,
-        "clics_tienda_hoy": 98,
-        "vistas_ultimos_7_dias": 104500,
-        "tasa_conversion_bio_pct": 1.38,
+        "videos_hoy": 0,
+        "vistas_hoy": 0,
+        "clics_tienda_hoy": 0,
+        "vistas_ultimos_7_dias": 0,
+        "tasa_conversion_bio_pct": 0.0,
         "dias_sin_publicar": 0,
-        "account_health_score": 97.2,
-        "health_status": "optimo"
+        "account_health_score": 75.0,
+        "health_status": "en_espera"
       },
-      "historial_metricas": [
-        {
-          "fecha": "2026-09-21",
-          "videos_publicados": 2,
-          "vistas": 14900,
-          "likes": 1150,
-          "clics_checkout": 82,
-          "pedidos": 7,
-          "health_score": 95.0
-        },
-        {
-          "fecha": "2026-09-22",
-          "videos_publicados": 2,
-          "vistas": 15800,
-          "likes": 1280,
-          "clics_checkout": 91,
-          "pedidos": 8,
-          "health_score": 96.4
-        },
-        {
-          "fecha": "2026-09-23",
-          "videos_publicados": 2,
-          "vistas": 16800,
-          "likes": 1390,
-          "clics_checkout": 98,
-          "pedidos": 9,
-          "health_score": 97.2
-        }
-      ],
+      "historial_metricas": [],
       "ganchos_conversion": {
         "gancho_1_curiosidad": {
           "nombre": "Curiosidad Disruptiva: El Metal que No Rompe Huevos",
@@ -292,8 +229,11 @@
           "texto_3d": "TEXTURA DE SEDA"
         }
       },
-      "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
-      "status": "activo",
+      "horarios_publicacion_est": [
+        "11:00 AM",
+        "07:00 PM"
+      ],
+      "status": "en_preparacion",
       "created_at": "2026-09-19T10:00:00Z",
       "updated_at": "2026-09-23T23:00:00Z"
     },
@@ -306,16 +246,21 @@
         "categoria": "Health & Ergonomics",
         "descripcion": "Clinical-grade inflatable lumbar traction belt with 24 pneumatic columns providing 2.5 bar decompression for L1-L5 vertebrae and acute sciatica nerve relief.",
         "precio_sugerido_usd": 54.99,
-        "costo_proveedor_usd": 10.00,
-        "costo_envio_usd": 4.80,
-        "costo_puesto_usd": 14.80,
+        "costo_proveedor_usd": 10.0,
+        "costo_envio_usd": 4.8,
+        "costo_puesto_usd": 14.8,
         "beneficio_neto_usd": 37.75,
         "margen_neto_pct": 68.65,
         "markup_multiplier": 3.72,
         "proveedor_url": "https://www.aliexpress.com/w/wholesale-lumbar-traction-belt.html",
         "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=lumbar%20traction%20belt",
         "linea_logistica": "YunExpress Specialty Line (7 - 10 días laborables)",
-        "paises_objetivo": ["US", "UK", "CA", "AU"]
+        "paises_objetivo": [
+          "US",
+          "UK",
+          "CA",
+          "AU"
+        ]
       },
       "score_hunter": 97.0,
       "enlace_tienda": "https://spinerelief.store/products/traction-belt",
@@ -323,39 +268,29 @@
         "youtube_shorts": {
           "handle": "@SpineReliefTech",
           "canal_url": "https://youtube.com/@SpineReliefTech",
-          "estado": "activo",
-          "seguidores": 3480,
-          "reproducciones_totales": 89500,
-          "videos_publicados": 16,
-          "ultimo_post": "2026-09-23T15:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "instagram_reels": {
           "handle": "@spinerelief_us",
           "canal_url": "https://instagram.com/spinerelief_us",
-          "estado": "activo",
-          "seguidores": 3120,
-          "reproducciones_totales": 72400,
-          "videos_publicados": 16,
-          "ultimo_post": "2026-09-23T23:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "facebook_reels": {
           "handle": "SpineRelief Official",
           "canal_url": "https://facebook.com/spinerelief_official",
-          "estado": "activo",
-          "seguidores": 1840,
-          "reproducciones_totales": 38600,
-          "videos_publicados": 12,
-          "ultimo_post": "2026-09-23T23:00:00Z"
-        },
-        "tiktok": {
-          "handle": "@spinerelief_usa",
-          "canal_url": "https://tiktok.com/@spinerelief_usa",
-          "estado": "calentamiento",
-          "seguidores": 280,
-          "reproducciones_totales": 2900,
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
           "videos_publicados": 0,
-          "ultimo_post": null,
-          "burner_phone_id": "Burner-Phone-GalaxyS10-SIM-MintUS-03"
+          "ultimo_post": null
         }
       },
       "credenciales_aisladas": {
@@ -371,44 +306,16 @@
         }
       },
       "metricas_resumen": {
-        "videos_hoy": 2,
-        "vistas_hoy": 11300,
-        "clics_tienda_hoy": 65,
-        "vistas_ultimos_7_dias": 68900,
-        "tasa_conversion_bio_pct": 1.18,
+        "videos_hoy": 0,
+        "vistas_hoy": 0,
+        "clics_tienda_hoy": 0,
+        "vistas_ultimos_7_dias": 0,
+        "tasa_conversion_bio_pct": 0.0,
         "dias_sin_publicar": 0,
-        "account_health_score": 95.1,
-        "health_status": "optimo"
+        "account_health_score": 75.0,
+        "health_status": "en_espera"
       },
-      "historial_metricas": [
-        {
-          "fecha": "2026-09-21",
-          "videos_publicados": 2,
-          "vistas": 10200,
-          "likes": 780,
-          "clics_checkout": 54,
-          "pedidos": 4,
-          "health_score": 93.5
-        },
-        {
-          "fecha": "2026-09-22",
-          "videos_publicados": 2,
-          "vistas": 10800,
-          "likes": 840,
-          "clics_checkout": 59,
-          "pedidos": 5,
-          "health_score": 94.2
-        },
-        {
-          "fecha": "2026-09-23",
-          "videos_publicados": 2,
-          "vistas": 11300,
-          "likes": 910,
-          "clics_checkout": 65,
-          "pedidos": 6,
-          "health_score": 95.1
-        }
-      ],
+      "historial_metricas": [],
       "ganchos_conversion": {
         "gancho_1_curiosidad": {
           "nombre": "Curiosidad Disruptiva: El Secreto Médico Prohibido",
@@ -439,8 +346,11 @@
           "texto_3d": "ANTES / DESPUÉS"
         }
       },
-      "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
-      "status": "activo",
+      "horarios_publicacion_est": [
+        "11:00 AM",
+        "07:00 PM"
+      ],
+      "status": "en_preparacion",
       "created_at": "2026-09-20T14:00:00Z",
       "updated_at": "2026-09-23T23:00:00Z"
     },
@@ -453,16 +363,21 @@
         "categoria": "Automotive & Tactical Tools",
         "descripcion": "Handheld micro-turbine jet fan with 130,000 RPM brushless motor delivering 52 m/s wind speed for contact-free car drying, detailing, and keyboard cleaning without swirl marks.",
         "precio_sugerido_usd": 59.99,
-        "costo_proveedor_usd": 12.00,
-        "costo_envio_usd": 4.80,
-        "costo_puesto_usd": 16.80,
+        "costo_proveedor_usd": 12.0,
+        "costo_envio_usd": 4.8,
+        "costo_puesto_usd": 16.8,
         "beneficio_neto_usd": 40.55,
         "margen_neto_pct": 67.59,
         "markup_multiplier": 3.57,
         "proveedor_url": "https://www.aliexpress.com/w/wholesale-turbo-jet-fan.html",
         "sourcing_cj_url": "https://cjdropshipping.com/list-detail.html?search=turbo%20jet%20fan",
         "linea_logistica": "YunExpress Special Battery Line / CJPacket Sensitive (UN38.3) (8 - 11 días hábiles)",
-        "paises_objetivo": ["US", "CA", "AU", "UK"]
+        "paises_objetivo": [
+          "US",
+          "CA",
+          "AU",
+          "UK"
+        ]
       },
       "score_hunter": 97.0,
       "enlace_tienda": "https://aeroforcejet.com/products/x3-turbo-fan",
@@ -470,39 +385,29 @@
         "youtube_shorts": {
           "handle": "@AeroForceTurbine",
           "canal_url": "https://youtube.com/@AeroForceTurbine",
-          "estado": "activo",
-          "seguidores": 3950,
-          "reproducciones_totales": 112000,
-          "videos_publicados": 18,
-          "ultimo_post": "2026-09-23T15:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "instagram_reels": {
           "handle": "@aeroforce_x3",
           "canal_url": "https://instagram.com/aeroforce_x3",
-          "estado": "activo",
-          "seguidores": 3610,
-          "reproducciones_totales": 88400,
-          "videos_publicados": 18,
-          "ultimo_post": "2026-09-23T23:00:00Z"
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
+          "videos_publicados": 0,
+          "ultimo_post": null
         },
         "facebook_reels": {
           "handle": "AeroForce Jet Fan",
           "canal_url": "https://facebook.com/aeroforce_fan",
-          "estado": "activo",
-          "seguidores": 1750,
-          "reproducciones_totales": 41200,
-          "videos_publicados": 14,
-          "ultimo_post": "2026-09-23T23:00:00Z"
-        },
-        "tiktok": {
-          "handle": "@aeroforce_usa",
-          "canal_url": "https://tiktok.com/@aeroforce_usa",
-          "estado": "calentamiento",
-          "seguidores": 295,
-          "reproducciones_totales": 3100,
+          "estado": "pausado",
+          "seguidores": 0,
+          "reproducciones_totales": 0,
           "videos_publicados": 0,
-          "ultimo_post": null,
-          "burner_phone_id": "Burner-Phone-Pixel4-SIM-TelloUS-04"
+          "ultimo_post": null
         }
       },
       "credenciales_aisladas": {
@@ -518,44 +423,16 @@
         }
       },
       "metricas_resumen": {
-        "videos_hoy": 2,
-        "vistas_hoy": 13500,
-        "clics_tienda_hoy": 78,
-        "vistas_ultimos_7_dias": 81200,
-        "tasa_conversion_bio_pct": 1.22,
+        "videos_hoy": 0,
+        "vistas_hoy": 0,
+        "clics_tienda_hoy": 0,
+        "vistas_ultimos_7_dias": 0,
+        "tasa_conversion_bio_pct": 0.0,
         "dias_sin_publicar": 0,
-        "account_health_score": 96.0,
-        "health_status": "optimo"
+        "account_health_score": 75.0,
+        "health_status": "en_espera"
       },
-      "historial_metricas": [
-        {
-          "fecha": "2026-09-21",
-          "videos_publicados": 2,
-          "vistas": 11900,
-          "likes": 890,
-          "clics_checkout": 62,
-          "pedidos": 5,
-          "health_score": 93.8
-        },
-        {
-          "fecha": "2026-09-22",
-          "videos_publicados": 2,
-          "vistas": 12700,
-          "likes": 980,
-          "clics_checkout": 71,
-          "pedidos": 6,
-          "health_score": 95.0
-        },
-        {
-          "fecha": "2026-09-23",
-          "videos_publicados": 2,
-          "vistas": 13500,
-          "likes": 1050,
-          "clics_checkout": 78,
-          "pedidos": 7,
-          "health_score": 96.0
-        }
-      ],
+      "historial_metricas": [],
       "ganchos_conversion": {
         "gancho_1_curiosidad": {
           "nombre": "Curiosidad Disruptiva: Un Motor de Caza en el Bolsillo",
@@ -586,8 +463,11 @@
           "texto_3d": "SECO EN 2 MIN"
         }
       },
-      "horarios_publicacion_est": ["11:00 AM", "07:00 PM"],
-      "status": "activo",
+      "horarios_publicacion_est": [
+        "11:00 AM",
+        "07:00 PM"
+      ],
+      "status": "en_preparacion",
       "created_at": "2026-09-20T16:00:00Z",
       "updated_at": "2026-09-23T23:00:00Z"
     }
