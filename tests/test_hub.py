@@ -760,6 +760,17 @@ class TestCommandLineInterface(BaseHubTestCase):
         self.assertEqual(code, 0)
         self.assertIn("MULTI-ACCOUNT HUB", out)
 
+    def test_cli_refresh_all_command(self):
+        code, out, err = self.run_cli(["refresh", "--all"])
+        self.assertEqual(code, 0)
+        self.assertIn("Refreshed metrics for 1 active business(es)", out)
+        self.assertIn("steamfur-pro", out)
+
+    def test_cli_refresh_id_command(self):
+        code, out, err = self.run_cli(["refresh", "--id", "steamfur-pro"])
+        self.assertEqual(code, 0)
+        self.assertIn("Refreshed metrics for 'steamfur-pro'", out)
+
 
 # ==============================================================================
 # 8. Date Parsing Utility Tests
@@ -1008,5 +1019,97 @@ class TestRemediationRegression(BaseHubTestCase):
         self.assertTrue(reloaded.get("transaction_test"))
 
 
+# ==============================================================================
+# 9. Centinela Refresh & Active Store Shielding Tests
+# ==============================================================================
+class TestCentinelaRefreshAndShielding(BaseHubTestCase):
+    """Verifies that Centinela refresh shields en_preparacion stores and scales dynamically."""
+
+    def setUp(self):
+        super().setUp()
+        self.engine = HubEngine(data_path=self.data_file)
+        self.engine.seed_initial_businesses(overwrite=True)
+
+    def test_refresh_metrics_active_only(self):
+        """When refreshing all, ONLY active stores are polled; en_preparacion stores stay untouched."""
+        refreshed = self.engine.refresh_metrics(None)
+        # Exactly 1 active business refreshed (steamfur-pro)
+        self.assertEqual(len(refreshed), 1)
+        self.assertEqual(refreshed[0]["id"], "steamfur-pro")
+        self.assertEqual(refreshed[0]["status"], "activo")
+
+        # Verify en_preparacion businesses in storage are 100% untouched
+        all_businesses = self.engine.list_businesses(include_archived=True)
+        prep_ids = ["prosmile-ultrasonic", "spinerelief-pro", "aeroforce-x3"]
+        for b in all_businesses:
+            if b["id"] in prep_ids:
+                self.assertEqual(b["status"], "en_preparacion")
+                summary = b.get("metricas_resumen", {})
+                self.assertEqual(summary.get("account_health_score"), 75.0)
+                self.assertEqual(summary.get("health_status"), "en_espera")
+                # Ensure no ultimo_sondeo was set by the refresh on dormant channels
+                chans = b.get("cluster_canales", {})
+                for ch_name, ch_data in chans.items():
+                    self.assertNotIn("ultimo_sondeo", ch_data)
+
+    def test_refresh_metrics_dynamic_activation(self):
+        """Activating a second business dynamically includes it in the refresh without code changes."""
+        # Activate prosmile-ultrasonic
+        self.engine.update_business("prosmile-ultrasonic", {"status": "activo"})
+
+        refreshed = self.engine.refresh_metrics(None)
+        refreshed_ids = [b["id"] for b in refreshed]
+        self.assertEqual(len(refreshed), 2)
+        self.assertIn("steamfur-pro", refreshed_ids)
+        self.assertIn("prosmile-ultrasonic", refreshed_ids)
+
+        # The other 2 still remain untouched
+        remaining_prep = ["spinerelief-pro", "aeroforce-x3"]
+        for b_id in remaining_prep:
+            b = self.engine.get_business(b_id)
+            self.assertEqual(b["status"], "en_preparacion")
+            self.assertEqual(b.get("metricas_resumen", {}).get("account_health_score"), 75.0)
+            self.assertEqual(b.get("metricas_resumen", {}).get("health_status"), "en_espera")
+
+    def test_refresh_metrics_single_target(self):
+        """Targeting a specific store refreshes that single store."""
+        refreshed = self.engine.refresh_metrics("steamfur-pro")
+        self.assertIsInstance(refreshed, dict)
+        self.assertEqual(refreshed["id"], "steamfur-pro")
+        self.assertIn("refreshed_at", refreshed)
+
+    def test_centinela_refresh_script_runner(self):
+        """Verifies that scripts/centinela_refresh.py main() executes cleanly."""
+        from scripts.centinela_refresh import main as centinela_main
+        test_args = ["centinela_refresh.py", "--data-path", self.data_file, "--all"]
+        with patch("sys.argv", test_args):
+            stdout_buf = io.StringIO()
+            with patch("sys.stdout", stdout_buf):
+                exit_code = centinela_main()
+            self.assertEqual(exit_code, 0)
+            self.assertIn("Refreshed metrics for 1 active business(es)", stdout_buf.getvalue())
+
+    def test_inmutability_shield_index_html_untouched(self):
+        """Verifies Constitutional Inmutability (§ 7): index.html is never touched by HubEngine."""
+        index_path = os.path.join(HUB_ROOT, "index.html")
+        self.assertTrue(os.path.exists(index_path))
+        mtime_before = os.path.getmtime(index_path)
+        with open(index_path, "rb") as f:
+            content_before = f.read()
+
+        # Run refresh on engine
+        self.engine.refresh_metrics(None)
+
+        mtime_after = os.path.getmtime(index_path)
+        with open(index_path, "rb") as f:
+            content_after = f.read()
+
+        self.assertEqual(content_before, content_after)
+        self.assertEqual(mtime_before, mtime_after)
+
+
 if __name__ == "__main__":
     unittest.main()
+
+
+

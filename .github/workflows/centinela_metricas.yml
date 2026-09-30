@@ -1,0 +1,62 @@
+name: Centinela Métricas Diarias
+
+on:
+  schedule:
+    # 12:00 UTC = 06:00 AM CST (El Salvador / Central Standard Time UTC-6)
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: centinela-metricas
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  refresco-metricas:
+    name: Sincronización y Blindaje de Métricas Vivas
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout del Repositorio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 2. Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 3. Pre-run Test Check (82/82 OK)
+        run: |
+          python -m unittest discover tests
+
+      - name: 4. Ejecutar Sonda Centinela de Métricas Vivas
+        run: |
+          python hub_engine.py refresh --all
+
+      - name: 5. Blindaje Constitucional de Inmutabilidad (§ 7)
+        run: |
+          if ! git diff --quiet index.html hub_engine.py; then
+            echo "FATAL: Inmutability violation detected. index.html or hub_engine.py modified!"
+            exit 1
+          fi
+          echo "Constitución § 7 verificada: index.html y hub_engine.py permanecen 100% inmutables."
+
+      - name: 6. Post-run Test Check (82/82 OK)
+        run: |
+          python -m unittest discover tests
+
+      - name: 7. Commit y Push Seguro (Exclusivo data/negocios.json)
+        run: |
+          git config user.name "Centinela Bot [GitHub Actions]"
+          git config user.email "actions@github.com"
+          git add data/negocios.json
+          if git diff --staged --quiet; then
+            echo "No metric changes detected in data/negocios.json. Working tree clean."
+          else
+            git commit -m "chore(centinela): sincro metricas vivas [skip ci]"
+            git push origin master
+          fi

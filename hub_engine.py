@@ -4,7 +4,7 @@
 Multi-Account Hub Engine (Centro de Mando de Cuentas y Negocios Independientes)
 ================================================================================
 Core backend engine governing independent dropshipping businesses and their
-channel clusters (YouTube Shorts, Instagram Reels, Facebook Reels, TikTok USA)
+channel clusters (YouTube Shorts, Instagram Reels, Facebook Reels)
 under strict anti-ban isolation principles.
 
 Features:
@@ -1405,29 +1405,39 @@ class HubEngine:
     # -------------------------------------------------------------
     def refresh_metrics(
         self,
+        target_id: Optional[str] = None,
         business_id: Optional[str] = None,
     ) -> Union[Dict[str, Any], List[Dict[str, Any]]]:
         """
-        Refreshes follower, view, and post metrics for a specific business or all businesses.
+        Refreshes follower, view, and post metrics for a specific business or all active businesses.
+        When refreshing all (target_id=None), ONLY queries/refreshes businesses with status == "activo",
+        keeping businesses in status == "en_preparacion" completely untouched with their default
+        scores (75.0) and semaphores intact.
+        If a store is later activated to status == "activo", it will automatically be refreshed.
         Probes canonical accounts (YouTube Shorts, Instagram Reels, Facebook Reels)
         with resilient non-blocking fallback if public networks are offline or rate-limited.
         Updates last check timestamps ('ultimo_sondeo', 'refreshed_at'), recomputes
         Account Health Score, and persists atomically to storage.
         """
+        eff_id = target_id if target_id is not None else business_id
         with self.storage.lock:
             data = self.storage.load()
             targets: List[Dict[str, Any]] = []
 
-            if business_id is not None:
-                b_slug = str(business_id).strip().lower()
+            if eff_id is not None:
+                b_slug = str(eff_id).strip().lower()
                 for b in data.get("businesses", []):
                     if b.get("id") == b_slug:
                         targets.append(b)
                         break
                 if not targets:
-                    raise KeyError(f"Business '{business_id}' not found in storage")
+                    raise KeyError(f"Business '{eff_id}' not found in storage")
             else:
-                targets = data.get("businesses", [])
+                # Active Store Dynamic Refresh: ONLY query/refresh businesses with status == "activo".
+                # Keep businesses in status == "en_preparacion" completely untouched with their
+                # default scores (75.0) and semaphores intact!
+                # If a store is later activated to status: "activo", it will automatically be refreshed.
+                targets = [b for b in data.get("businesses", []) if b.get("status") == "activo"]
 
             now_iso = datetime.now(timezone.utc).isoformat()
 
@@ -1461,7 +1471,7 @@ class HubEngine:
 
             self.storage.save(data)
 
-            if business_id is not None:
+            if eff_id is not None:
                 return copy.deepcopy(targets[0])
             return copy.deepcopy(targets)
 
@@ -1493,6 +1503,13 @@ def build_cli_parser() -> argparse.ArgumentParser:
         dest="target_id",
         default=None,
         help="Target business ID for commands (e.g. steamfur-pro)",
+    )
+    parser.add_argument(
+        "--all",
+        dest="refresh_all",
+        action="store_true",
+        default=False,
+        help="Target all active businesses (used with refresh command)",
     )
 
     action_group = parser.add_mutually_exclusive_group()
@@ -1573,9 +1590,12 @@ def cli_main(argv: Optional[List[str]] = None) -> int:
         return 1
 
     target_id = args.target_id or (args.refresh if (args.refresh and args.refresh != "DEFAULT") else None)
+    if getattr(args, "refresh_all", False):
+        target_id = None
+
     if args.command == "refresh" or args.refresh:
         try:
-            if target_id:
+            if target_id and not getattr(args, "refresh_all", False):
                 refreshed = engine.refresh_metrics(target_id)
                 chans = refreshed.get("cluster_canales", {})
                 yt_subs = chans.get("youtube_shorts", {}).get("seguidores", 0)
@@ -1592,7 +1612,7 @@ def cli_main(argv: Optional[List[str]] = None) -> int:
                 return 0
             else:
                 refreshed_list = engine.refresh_metrics(None)
-                print(f"[OK] Refreshed metrics for all {len(refreshed_list)} businesses.")
+                print(f"[OK] Refreshed metrics for {len(refreshed_list)} active business(es).")
                 for b in refreshed_list:
                     score = b.get("metricas_resumen", {}).get("account_health_score", 0.0)
                     print(f"     - {b['id']:<20}: Health {score:>5.1f}p [{b.get('metricas_resumen', {}).get('health_status', '').upper()}]")
