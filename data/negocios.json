@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-10-01T18:09:51.332668+00:00",
+  "updated_at": "2026-10-02T17:35:37.708960+00:00",
   "total_businesses": 4,
   "businesses": [
     {
@@ -39,7 +39,7 @@
           "reproducciones_totales": 0,
           "videos_publicados": 0,
           "ultimo_post": null,
-          "ultimo_sondeo": "2026-10-01T18:09:51.332628+00:00"
+          "ultimo_sondeo": "2026-10-02T17:35:37.708912+00:00"
         },
         "instagram_reels": {
           "handle": "@steamfurpro",
@@ -49,7 +49,7 @@
           "reproducciones_totales": 0,
           "videos_publicados": 0,
           "ultimo_post": null,
-          "ultimo_sondeo": "2026-10-01T18:09:51.332628+00:00"
+          "ultimo_sondeo": "2026-10-02T17:35:37.708912+00:00"
         },
         "facebook_reels": {
           "handle": "SteamFur Pro Official",
@@ -59,7 +59,7 @@
           "reproducciones_totales": 0,
           "videos_publicados": 0,
           "ultimo_post": null,
-          "ultimo_sondeo": "2026-10-01T18:09:51.332628+00:00"
+          "ultimo_sondeo": "2026-10-02T17:35:37.708912+00:00"
         }
       },
       "credenciales_aisladas": {
@@ -121,8 +121,8 @@
       ],
       "status": "activo",
       "created_at": "2026-09-20T12:00:00Z",
-      "updated_at": "2026-10-01T18:09:51.332628+00:00",
-      "refreshed_at": "2026-10-01T18:09:51.332628+00:00"
+      "updated_at": "2026-10-02T17:35:37.708912+00:00",
+      "refreshed_at": "2026-10-02T17:35:37.708912+00:00"
     },
     {
       "id": "prosmile-ultrasonic",
